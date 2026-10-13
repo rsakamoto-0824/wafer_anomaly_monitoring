@@ -1,0 +1,10 @@
+family,family_label,representative,mean_detection
+OR,OR統合,OR[M3S_XY+MD_d4+T2_raw_q99+SPE_raw_q99+GPR_rbf_full],0.5674199999999999
+M4,PCA T²,T2_raw_q99,0.49866
+M6,GPR残差,GPR_rbf_full,0.39314
+M3,Mahalanobis距離,MD_d5,0.35719999999999996
+M5,PCA SPE,SPE_raw_q99,0.3054
+M7,EWMA,MD_d5|EWMA-scalar(λ=0.4),0.2951
+M1,M3S,M3S_XY,0.2756
+M2,多項式係数SPC,SPC_d4,0.26608
+M8,CUSUM,GPR_matern52_residual|CUSUM(k=1),0.2489

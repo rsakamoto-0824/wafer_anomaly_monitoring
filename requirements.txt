@@ -1,0 +1,11 @@
+# Python 3.14.6 で動作確認（Python 3.14.5 以上を想定）
+numpy==2.5.4
+scipy==1.18.1
+pandas==3.0.6
+scikit-learn==1.9.1
+matplotlib==3.11.2
+seaborn==0.13.2
+PyYAML==6.0.3
+pytest==9.1.1
+pyarrow==26.0.0     # Parquet の書き出し
+joblib==1.6.0       # 並列処理

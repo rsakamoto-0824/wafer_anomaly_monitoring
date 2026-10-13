@@ -1,0 +1,765 @@
+{
+ "base": "/Users/sakamoto/04_プログラミング/ClaudeCode/GitHub/wafer_anomaly_monitoring/references",
+ "case_collection": "2026-10-13_Wafer面内傾向の異常検知手法比較",
+ "unread_tag": "未読",
+ "items": [
+  {
+   "key": "page1954",
+   "itemType": "journalArticle",
+   "title": "Continuous inspection schemes",
+   "collection": "04_統計",
+   "tags": [
+    "種別/論文",
+    "掲載誌/Biometrika",
+    "分野/統計"
+   ],
+   "creators": [
+    {
+     "lastName": "Page",
+     "firstName": "E. S.",
+     "creatorType": "author"
+    }
+   ],
+   "date": "1954",
+   "fields": {
+    "url": "https://doi.org/10.1093/biomet/41.1-2.100",
+    "DOI": "10.1093/biomet/41.1-2.100",
+    "publicationTitle": "Biometrika",
+    "volume": "41",
+    "issue": "1-2",
+    "pages": "100-115"
+   },
+   "importId": "wafer-anomaly-monitoring:4d1e799edb369fc57ee27f514be86d94bccd7d98acc5413b2e8fb4cc5b1217f7",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "roberts1959",
+   "itemType": "journalArticle",
+   "title": "Control chart tests based on geometric moving averages",
+   "collection": "04_統計",
+   "tags": [
+    "種別/論文",
+    "掲載誌/Technometrics",
+    "分野/統計"
+   ],
+   "creators": [
+    {
+     "lastName": "Roberts",
+     "firstName": "S. W.",
+     "creatorType": "author"
+    }
+   ],
+   "date": "1959",
+   "fields": {
+    "url": "https://doi.org/10.1080/00401706.1959.10489860",
+    "DOI": "10.1080/00401706.1959.10489860",
+    "publicationTitle": "Technometrics",
+    "volume": "1",
+    "issue": "3",
+    "pages": "239-250"
+   },
+   "importId": "wafer-anomaly-monitoring:337a783d3dc5d17239bf24aacc545036e4c2de8963a2ccf97be73459a624c5e2",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "lucas1990",
+   "itemType": "journalArticle",
+   "title": "Exponentially weighted moving average control schemes: properties and enhancements",
+   "collection": "04_統計",
+   "tags": [
+    "種別/論文",
+    "掲載誌/Technometrics",
+    "分野/統計"
+   ],
+   "creators": [
+    {
+     "lastName": "Lucas",
+     "firstName": "J. M.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Saccucci",
+     "firstName": "M. S.",
+     "creatorType": "author"
+    }
+   ],
+   "date": "1990",
+   "fields": {
+    "url": "https://doi.org/10.1080/00401706.1990.10484583",
+    "DOI": "10.1080/00401706.1990.10484583",
+    "publicationTitle": "Technometrics",
+    "volume": "32",
+    "issue": "1",
+    "pages": "1-12"
+   },
+   "importId": "wafer-anomaly-monitoring:b2a3dadf91551707d7d49182492e1b534e00bfa59e8253b4e009344b1928c501",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "lowry1992",
+   "itemType": "journalArticle",
+   "title": "A multivariate exponentially weighted moving average control chart",
+   "collection": "04_統計",
+   "tags": [
+    "種別/論文",
+    "掲載誌/Technometrics",
+    "分野/統計"
+   ],
+   "creators": [
+    {
+     "lastName": "Lowry",
+     "firstName": "C. A.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Woodall",
+     "firstName": "W. H.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Champ",
+     "firstName": "C. W.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Rigdon",
+     "firstName": "S. E.",
+     "creatorType": "author"
+    }
+   ],
+   "date": "1992",
+   "fields": {
+    "url": "https://doi.org/10.1080/00401706.1992.10485232",
+    "DOI": "10.1080/00401706.1992.10485232",
+    "publicationTitle": "Technometrics",
+    "volume": "34",
+    "issue": "1",
+    "pages": "46-53"
+   },
+   "importId": "wafer-anomaly-monitoring:45249aca8516d57fc967d9deacadf86ce45eb33f8ebb58ae52d21b3b02650769",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "crosier1988",
+   "itemType": "journalArticle",
+   "title": "Multivariate generalizations of cumulative sum quality-control schemes",
+   "collection": "04_統計",
+   "tags": [
+    "種別/論文",
+    "掲載誌/Technometrics",
+    "分野/統計"
+   ],
+   "creators": [
+    {
+     "lastName": "Crosier",
+     "firstName": "R. B.",
+     "creatorType": "author"
+    }
+   ],
+   "date": "1988",
+   "fields": {
+    "url": "https://doi.org/10.1080/00401706.1988.10488402",
+    "DOI": "10.1080/00401706.1988.10488402",
+    "publicationTitle": "Technometrics",
+    "volume": "30",
+    "issue": "3",
+    "pages": "291-303"
+   },
+   "importId": "wafer-anomaly-monitoring:408b24b644c598e16c2fbff115598da728a5546aec2793053d8a5b42dd5bdc1c",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "jackson1979",
+   "itemType": "journalArticle",
+   "title": "Control procedures for residuals associated with principal component analysis",
+   "collection": "04_統計",
+   "tags": [
+    "種別/論文",
+    "掲載誌/Technometrics",
+    "分野/統計"
+   ],
+   "creators": [
+    {
+     "lastName": "Jackson",
+     "firstName": "J. E.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Mudholkar",
+     "firstName": "G. S.",
+     "creatorType": "author"
+    }
+   ],
+   "date": "1979",
+   "fields": {
+    "url": "https://doi.org/10.1080/00401706.1979.10489779",
+    "DOI": "10.1080/00401706.1979.10489779",
+    "publicationTitle": "Technometrics",
+    "volume": "21",
+    "issue": "3",
+    "pages": "341-349"
+   },
+   "importId": "wafer-anomaly-monitoring:beec03ade87951e03e7197be573f23ffc34826403ed74e57882a5dff074eeb97",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "box1954",
+   "itemType": "journalArticle",
+   "title": "Some theorems on quadratic forms applied in the study of analysis of variance problems, I",
+   "collection": "04_統計",
+   "tags": [
+    "種別/論文",
+    "掲載誌/Annals of Mathematical Statistics",
+    "分野/統計"
+   ],
+   "creators": [
+    {
+     "lastName": "Box",
+     "firstName": "G. E. P.",
+     "creatorType": "author"
+    }
+   ],
+   "date": "1954",
+   "fields": {
+    "url": "https://doi.org/10.1214/aoms/1177728786",
+    "DOI": "10.1214/aoms/1177728786",
+    "publicationTitle": "The Annals of Mathematical Statistics",
+    "volume": "25",
+    "issue": "2",
+    "pages": "290-302"
+   },
+   "importId": "wafer-anomaly-monitoring:2755220567537951a6493ad3703888f0e2595549caf4b11bb2528b7c287f8262",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "macgregor1995",
+   "itemType": "journalArticle",
+   "title": "Statistical process control of multivariate processes",
+   "collection": "04_統計",
+   "tags": [
+    "種別/論文",
+    "掲載誌/Control Engineering Practice",
+    "分野/統計"
+   ],
+   "creators": [
+    {
+     "lastName": "MacGregor",
+     "firstName": "J. F.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Kourti",
+     "firstName": "T.",
+     "creatorType": "author"
+    }
+   ],
+   "date": "1995",
+   "fields": {
+    "url": "https://doi.org/10.1016/0967-0661(95)00014-L",
+    "DOI": "10.1016/0967-0661(95)00014-L",
+    "publicationTitle": "Control Engineering Practice",
+    "volume": "3",
+    "issue": "3",
+    "pages": "403-414"
+   },
+   "importId": "wafer-anomaly-monitoring:41e47bf635637f169e82b8715f3b59e15984bf64ecf63e188b83684ef05e18ec",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "qin2003",
+   "itemType": "journalArticle",
+   "title": "Statistical process monitoring: basics and beyond",
+   "collection": "04_統計",
+   "tags": [
+    "種別/論文",
+    "掲載誌/Journal of Chemometrics",
+    "分野/統計"
+   ],
+   "creators": [
+    {
+     "lastName": "Qin",
+     "firstName": "S. J.",
+     "creatorType": "author"
+    }
+   ],
+   "date": "2003",
+   "fields": {
+    "url": "https://doi.org/10.1002/cem.800",
+    "DOI": "10.1002/cem.800",
+    "publicationTitle": "Journal of Chemometrics",
+    "volume": "17",
+    "issue": "8-9",
+    "pages": "480-502"
+   },
+   "importId": "wafer-anomaly-monitoring:051fd28b49e0aa5f65809d16ed890c2d182df312e528a028f758068886f13ab8",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "ledoit2004",
+   "itemType": "journalArticle",
+   "title": "A well-conditioned estimator for large-dimensional covariance matrices",
+   "collection": "04_統計",
+   "tags": [
+    "種別/論文",
+    "掲載誌/Journal of Multivariate Analysis",
+    "分野/統計"
+   ],
+   "creators": [
+    {
+     "lastName": "Ledoit",
+     "firstName": "O.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Wolf",
+     "firstName": "M.",
+     "creatorType": "author"
+    }
+   ],
+   "date": "2004",
+   "fields": {
+    "url": "https://doi.org/10.1016/S0047-259X(03)00096-4",
+    "DOI": "10.1016/S0047-259X(03)00096-4",
+    "publicationTitle": "Journal of Multivariate Analysis",
+    "volume": "88",
+    "issue": "2",
+    "pages": "365-411"
+   },
+   "importId": "wafer-anomaly-monitoring:08e79244bf0ea47acb4a35189cfd7614bbc21cc058684da3d0cfe50d83717f1c",
+   "status": "obtained",
+   "reason": "著者（Ledoit）のサイトで公開されている原稿（2001年2月版）。掲載版とは体裁・細部が異なる可能性がある",
+   "file": "sources/2004_UCLA_Ledoit_Wolf_A_well-conditioned_estimator_for_large-dimensional_covariance_matrices_preprint2001.pdf"
+  },
+  {
+   "key": "alwan1988",
+   "itemType": "journalArticle",
+   "title": "Time-series modeling for statistical process control",
+   "collection": "04_統計",
+   "tags": [
+    "種別/論文",
+    "掲載誌/JBES",
+    "分野/統計"
+   ],
+   "creators": [
+    {
+     "lastName": "Alwan",
+     "firstName": "L. C.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Roberts",
+     "firstName": "H. V.",
+     "creatorType": "author"
+    }
+   ],
+   "date": "1988",
+   "fields": {
+    "url": "https://doi.org/10.1080/07350015.1988.10509640",
+    "DOI": "10.1080/07350015.1988.10509640",
+    "publicationTitle": "Journal of Business & Economic Statistics",
+    "volume": "6",
+    "issue": "1",
+    "pages": "87-95"
+   },
+   "importId": "wafer-anomaly-monitoring:4dbdf1e68e74b1cf677792d911d0856efe0cd422677cf5bbcf7a11ea73fa2840",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "woodall2004",
+   "itemType": "journalArticle",
+   "title": "Using control charts to monitor process and product quality profiles",
+   "collection": "04_統計",
+   "tags": [
+    "種別/論文",
+    "掲載誌/Journal of Quality Technology",
+    "分野/統計"
+   ],
+   "creators": [
+    {
+     "lastName": "Woodall",
+     "firstName": "W. H.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Spitzner",
+     "firstName": "D. J.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Montgomery",
+     "firstName": "D. C.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Gupta",
+     "firstName": "S.",
+     "creatorType": "author"
+    }
+   ],
+   "date": "2004",
+   "fields": {
+    "url": "https://doi.org/10.1080/00224065.2004.11980276",
+    "DOI": "10.1080/00224065.2004.11980276",
+    "publicationTitle": "Journal of Quality Technology",
+    "volume": "36",
+    "issue": "3",
+    "pages": "309-320"
+   },
+   "importId": "wafer-anomaly-monitoring:a62a95f636073e1b37234b67b2d4189a61ac14714984cda09f40021c0998eacd",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "colosimo2010",
+   "itemType": "journalArticle",
+   "title": "A comparison study of control charts for statistical monitoring of functional data",
+   "collection": "04_統計",
+   "tags": [
+    "種別/論文",
+    "掲載誌/IJPR",
+    "分野/統計"
+   ],
+   "creators": [
+    {
+     "lastName": "Colosimo",
+     "firstName": "B. M.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Pacella",
+     "firstName": "M.",
+     "creatorType": "author"
+    }
+   ],
+   "date": "2010",
+   "fields": {
+    "url": "https://doi.org/10.1080/00207540802662888",
+    "DOI": "10.1080/00207540802662888",
+    "publicationTitle": "International Journal of Production Research",
+    "volume": "48",
+    "issue": "6",
+    "pages": "1575-1601"
+   },
+   "importId": "wafer-anomaly-monitoring:ab8136d422c2a13b1a2b61b1d2c902e0077edffef8c61059f322e84c22219a64",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "rasmussen2006",
+   "itemType": "book",
+   "title": "Gaussian Processes for Machine Learning",
+   "collection": "03_機械学習",
+   "tags": [
+    "種別/書籍",
+    "分野/機械学習"
+   ],
+   "creators": [
+    {
+     "lastName": "Rasmussen",
+     "firstName": "C. E.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Williams",
+     "firstName": "C. K. I.",
+     "creatorType": "author"
+    }
+   ],
+   "date": "2006",
+   "fields": {
+    "url": "https://doi.org/10.7551/mitpress/3206.001.0001",
+    "DOI": "10.7551/mitpress/3206.001.0001",
+    "publisher": "MIT Press",
+    "ISBN": "026218253X"
+   },
+   "importId": "wafer-anomaly-monitoring:20355ed64b3df27c4477850dd5fcff8bfc25f56dcde043dbd08d1e5d5582db25",
+   "status": "obtained",
+   "reason": "著者の公式サイトで無料公開されている全文 PDF",
+   "file": "sources/2006_MIT_Rasmussen_Williams_Gaussian_Processes_for_Machine_Learning.pdf"
+  },
+  {
+   "key": "noll1976",
+   "itemType": "journalArticle",
+   "title": "Zernike polynomials and atmospheric turbulence",
+   "collection": "02_フォトニクス・光学シミュレーション",
+   "tags": [
+    "種別/論文",
+    "掲載誌/JOSA",
+    "分野/光学"
+   ],
+   "creators": [
+    {
+     "lastName": "Noll",
+     "firstName": "R. J.",
+     "creatorType": "author"
+    }
+   ],
+   "date": "1976",
+   "fields": {
+    "url": "https://doi.org/10.1364/JOSA.66.000207",
+    "DOI": "10.1364/JOSA.66.000207",
+    "publicationTitle": "Journal of the Optical Society of America",
+    "volume": "66",
+    "issue": "3",
+    "pages": "207-211"
+   },
+   "importId": "wafer-anomaly-monitoring:790d838b483dd902d2b31a2f52bf88cacc8abd66068e2d980f675d18e21a08a4",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "hanley1982",
+   "itemType": "journalArticle",
+   "title": "The meaning and use of the area under a receiver operating characteristic (ROC) curve",
+   "collection": "04_統計",
+   "tags": [
+    "種別/論文",
+    "掲載誌/Radiology",
+    "分野/統計"
+   ],
+   "creators": [
+    {
+     "lastName": "Hanley",
+     "firstName": "J. A.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "McNeil",
+     "firstName": "B. J.",
+     "creatorType": "author"
+    }
+   ],
+   "date": "1982",
+   "fields": {
+    "url": "https://doi.org/10.1148/radiology.143.1.7063747",
+    "DOI": "10.1148/radiology.143.1.7063747",
+    "publicationTitle": "Radiology",
+    "volume": "143",
+    "issue": "1",
+    "pages": "29-36"
+   },
+   "importId": "wafer-anomaly-monitoring:3138f4a057e1b6d38eb9401d3791eeee617eab086d3cfc1bb400ec0010f90b61",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "wilson1927",
+   "itemType": "journalArticle",
+   "title": "Probable inference, the law of succession, and statistical inference",
+   "collection": "04_統計",
+   "tags": [
+    "種別/論文",
+    "掲載誌/JASA",
+    "分野/統計"
+   ],
+   "creators": [
+    {
+     "lastName": "Wilson",
+     "firstName": "E. B.",
+     "creatorType": "author"
+    }
+   ],
+   "date": "1927",
+   "fields": {
+    "url": "https://doi.org/10.1080/01621459.1927.10502953",
+    "DOI": "10.1080/01621459.1927.10502953",
+    "publicationTitle": "Journal of the American Statistical Association",
+    "volume": "22",
+    "issue": "158",
+    "pages": "209-212"
+   },
+   "importId": "wafer-anomaly-monitoring:5da456d8de6c4a7b75490baed195a6bd366fa3b7a683e64fa2f44a9cd90c75b9",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "montgomery2001",
+   "itemType": "book",
+   "title": "Introduction to Statistical Quality Control (4th ed.)",
+   "collection": "04_統計",
+   "tags": [
+    "種別/書籍",
+    "分野/統計"
+   ],
+   "creators": [
+    {
+     "lastName": "Montgomery",
+     "firstName": "D. C.",
+     "creatorType": "author"
+    }
+   ],
+   "date": "2001",
+   "fields": {
+    "publisher": "John Wiley & Sons",
+    "edition": "4",
+    "ISBN": "0-471-31648-2"
+   },
+   "importId": "wafer-anomaly-monitoring:7cf3608d9838a784c5155c2cd57750172c4549bb182a898919d31681f806c8f6",
+   "status": "not_obtained",
+   "reason": "書籍で、電子版の正規の無料公開がない"
+  },
+  {
+   "key": "atkinson2007",
+   "itemType": "book",
+   "title": "Optimum Experimental Designs, with SAS",
+   "collection": "04_統計",
+   "tags": [
+    "種別/書籍",
+    "分野/実験計画法"
+   ],
+   "creators": [
+    {
+     "lastName": "Atkinson",
+     "firstName": "A. C.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Donev",
+     "firstName": "A. N.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Tobias",
+     "firstName": "R. D.",
+     "creatorType": "author"
+    }
+   ],
+   "date": "2007",
+   "fields": {
+    "publisher": "Oxford University Press"
+   },
+   "importId": "wafer-anomaly-monitoring:460d29eebead0cac2a25e4961ec514defe865d85c3dd003dc2312f5f9240bf45",
+   "status": "not_obtained",
+   "reason": "書籍で、電子版の正規の無料公開がない"
+  },
+  {
+   "key": "adel2007",
+   "itemType": "conferencePaper",
+   "title": "The challenges of transitioning from linear to high-order overlay control in advanced lithography",
+   "collection": "01_半導体プロセス",
+   "tags": [
+    "種別/論文",
+    "掲載誌/SPIE Proceedings",
+    "分野/オーバーレイ・EPE"
+   ],
+   "creators": [
+    {
+     "lastName": "Adel",
+     "firstName": "M.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Izikson",
+     "firstName": "P.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Tien",
+     "firstName": "D.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Huang",
+     "firstName": "C. K.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Robinson",
+     "firstName": "J. C.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Eichelberger",
+     "firstName": "B.",
+     "creatorType": "author"
+    }
+   ],
+   "date": "2007",
+   "fields": {
+    "url": "https://doi.org/10.1117/12.778457",
+    "DOI": "10.1117/12.778457",
+    "proceedingsTitle": "Proc. SPIE 6827 (Quantum Optics, Optical Data Storage, and Advanced Microlithography)",
+    "pages": "682722",
+    "publisher": "SPIE"
+   },
+   "importId": "wafer-anomaly-monitoring:cbb5075324d33f33d391791fd0cbace7297f3a9da13f0101d22bc4511637395f",
+   "status": "not_obtained",
+   "reason": "SPIE の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "pike2012",
+   "itemType": "conferencePaper",
+   "title": "High-order wafer alignment in manufacturing",
+   "collection": "01_半導体プロセス",
+   "tags": [
+    "種別/論文",
+    "掲載誌/SPIE Proceedings",
+    "分野/オーバーレイ・EPE"
+   ],
+   "creators": [
+    {
+     "lastName": "Pike",
+     "firstName": "M.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Felix",
+     "firstName": "N.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Menon",
+     "firstName": "V.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Ausschnitt",
+     "firstName": "C.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Wiltshire",
+     "firstName": "T.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Meyers",
+     "firstName": "S.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Kim",
+     "firstName": "W.",
+     "creatorType": "author"
+    },
+    {
+     "lastName": "Minghetti",
+     "firstName": "B.",
+     "creatorType": "author"
+    }
+   ],
+   "date": "2012",
+   "fields": {
+    "url": "https://doi.org/10.1117/12.916483",
+    "DOI": "10.1117/12.916483",
+    "proceedingsTitle": "Proc. SPIE 8324 (Metrology, Inspection, and Process Control for Microlithography XXVI)",
+    "pages": "832408",
+    "publisher": "SPIE"
+   },
+   "importId": "wafer-anomaly-monitoring:690284d21af96499bdd89472dc6cb9330741426776325012698ae4e25657b38b",
+   "status": "not_obtained",
+   "reason": "SPIE の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  }
+ ],
+ "existing_references": []
+}

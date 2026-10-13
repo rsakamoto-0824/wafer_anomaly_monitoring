@@ -1,0 +1,422 @@
+{
+ "case_collection": "2026-10-13_Wafer面内傾向の異常検知手法比較",
+ "checked_on": "2026-10-13",
+ "references": [
+  {
+   "key": "page1954",
+   "itemType": "journalArticle",
+   "title": "Continuous inspection schemes",
+   "authors": [
+    "Page, E. S."
+   ],
+   "year": 1954,
+   "venue": "Biometrika",
+   "volume": "41",
+   "issue": "1-2",
+   "pages": "100-115",
+   "doi": "10.1093/biomet/41.1-2.100",
+   "url": "https://doi.org/10.1093/biomet/41.1-2.100",
+   "used_for": "CUSUM",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "roberts1959",
+   "itemType": "journalArticle",
+   "title": "Control chart tests based on geometric moving averages",
+   "authors": [
+    "Roberts, S. W."
+   ],
+   "year": 1959,
+   "venue": "Technometrics",
+   "volume": "1",
+   "issue": "3",
+   "pages": "239-250",
+   "doi": "10.1080/00401706.1959.10489860",
+   "url": "https://doi.org/10.1080/00401706.1959.10489860",
+   "used_for": "EWMA",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "lucas1990",
+   "itemType": "journalArticle",
+   "title": "Exponentially weighted moving average control schemes: properties and enhancements",
+   "authors": [
+    "Lucas, J. M.",
+    "Saccucci, M. S."
+   ],
+   "year": 1990,
+   "venue": "Technometrics",
+   "volume": "32",
+   "issue": "1",
+   "pages": "1-12",
+   "doi": "10.1080/00401706.1990.10484583",
+   "url": "https://doi.org/10.1080/00401706.1990.10484583",
+   "used_for": "EWMA の性質と λ の選び方",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "lowry1992",
+   "itemType": "journalArticle",
+   "title": "A multivariate exponentially weighted moving average control chart",
+   "authors": [
+    "Lowry, C. A.",
+    "Woodall, W. H.",
+    "Champ, C. W.",
+    "Rigdon, S. E."
+   ],
+   "year": 1992,
+   "venue": "Technometrics",
+   "volume": "34",
+   "issue": "1",
+   "pages": "46-53",
+   "doi": "10.1080/00401706.1992.10485232",
+   "url": "https://doi.org/10.1080/00401706.1992.10485232",
+   "used_for": "MEWMA",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "crosier1988",
+   "itemType": "journalArticle",
+   "title": "Multivariate generalizations of cumulative sum quality-control schemes",
+   "authors": [
+    "Crosier, R. B."
+   ],
+   "year": 1988,
+   "venue": "Technometrics",
+   "volume": "30",
+   "issue": "3",
+   "pages": "291-303",
+   "doi": "10.1080/00401706.1988.10488402",
+   "url": "https://doi.org/10.1080/00401706.1988.10488402",
+   "used_for": "多変量 CUSUM",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "jackson1979",
+   "itemType": "journalArticle",
+   "title": "Control procedures for residuals associated with principal component analysis",
+   "authors": [
+    "Jackson, J. E.",
+    "Mudholkar, G. S."
+   ],
+   "year": 1979,
+   "venue": "Technometrics",
+   "volume": "21",
+   "issue": "3",
+   "pages": "341-349",
+   "doi": "10.1080/00401706.1979.10489779",
+   "url": "https://doi.org/10.1080/00401706.1979.10489779",
+   "used_for": "PCA の残差（SPE）の管理",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "box1954",
+   "itemType": "journalArticle",
+   "title": "Some theorems on quadratic forms applied in the study of analysis of variance problems, I",
+   "authors": [
+    "Box, G. E. P."
+   ],
+   "year": 1954,
+   "venue": "The Annals of Mathematical Statistics",
+   "volume": "25",
+   "issue": "2",
+   "pages": "290-302",
+   "doi": "10.1214/aoms/1177728786",
+   "url": "https://doi.org/10.1214/aoms/1177728786",
+   "used_for": "SPE の理論上の限界（g·χ² 近似）",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "macgregor1995",
+   "itemType": "journalArticle",
+   "title": "Statistical process control of multivariate processes",
+   "authors": [
+    "MacGregor, J. F.",
+    "Kourti, T."
+   ],
+   "year": 1995,
+   "venue": "Control Engineering Practice",
+   "volume": "3",
+   "issue": "3",
+   "pages": "403-414",
+   "doi": "10.1016/0967-0661(95)00014-L",
+   "url": "https://doi.org/10.1016/0967-0661(95)00014-L",
+   "used_for": "多変量 SPC（T²・SPE）",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "qin2003",
+   "itemType": "journalArticle",
+   "title": "Statistical process monitoring: basics and beyond",
+   "authors": [
+    "Qin, S. J."
+   ],
+   "year": 2003,
+   "venue": "Journal of Chemometrics",
+   "volume": "17",
+   "issue": "8-9",
+   "pages": "480-502",
+   "doi": "10.1002/cem.800",
+   "url": "https://doi.org/10.1002/cem.800",
+   "used_for": "T² と SPE の組み合わせ",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "ledoit2004",
+   "itemType": "journalArticle",
+   "title": "A well-conditioned estimator for large-dimensional covariance matrices",
+   "authors": [
+    "Ledoit, O.",
+    "Wolf, M."
+   ],
+   "year": 2004,
+   "venue": "Journal of Multivariate Analysis",
+   "volume": "88",
+   "issue": "2",
+   "pages": "365-411",
+   "doi": "10.1016/S0047-259X(03)00096-4",
+   "url": "https://doi.org/10.1016/S0047-259X(03)00096-4",
+   "used_for": "共分散の縮小推定",
+   "status": "obtained",
+   "file": "sources/2004_UCLA_Ledoit_Wolf_A_well-conditioned_estimator_for_large-dimensional_covariance_matrices_preprint2001.pdf",
+   "source_url": "http://www.ledoit.net/ole1a.pdf",
+   "reason": "著者（Ledoit）のサイトで公開されている原稿（2001年2月版）。掲載版とは体裁・細部が異なる可能性がある"
+  },
+  {
+   "key": "alwan1988",
+   "itemType": "journalArticle",
+   "title": "Time-series modeling for statistical process control",
+   "authors": [
+    "Alwan, L. C.",
+    "Roberts, H. V."
+   ],
+   "year": 1988,
+   "venue": "Journal of Business & Economic Statistics",
+   "volume": "6",
+   "issue": "1",
+   "pages": "87-95",
+   "doi": "10.1080/07350015.1988.10509640",
+   "url": "https://doi.org/10.1080/07350015.1988.10509640",
+   "used_for": "自己相関のある工程の残差（特殊原因）管理図",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "woodall2004",
+   "itemType": "journalArticle",
+   "title": "Using control charts to monitor process and product quality profiles",
+   "authors": [
+    "Woodall, W. H.",
+    "Spitzner, D. J.",
+    "Montgomery, D. C.",
+    "Gupta, S."
+   ],
+   "year": 2004,
+   "venue": "Journal of Quality Technology",
+   "volume": "36",
+   "issue": "3",
+   "pages": "309-320",
+   "doi": "10.1080/00224065.2004.11980276",
+   "url": "https://doi.org/10.1080/00224065.2004.11980276",
+   "used_for": "プロファイル（形状）監視",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "colosimo2010",
+   "itemType": "journalArticle",
+   "title": "A comparison study of control charts for statistical monitoring of functional data",
+   "authors": [
+    "Colosimo, B. M.",
+    "Pacella, M."
+   ],
+   "year": 2010,
+   "venue": "International Journal of Production Research",
+   "volume": "48",
+   "issue": "6",
+   "pages": "1575-1601",
+   "doi": "10.1080/00207540802662888",
+   "url": "https://doi.org/10.1080/00207540802662888",
+   "used_for": "形状データの管理図の比較",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "rasmussen2006",
+   "itemType": "book",
+   "title": "Gaussian Processes for Machine Learning",
+   "authors": [
+    "Rasmussen, C. E.",
+    "Williams, C. K. I."
+   ],
+   "year": 2006,
+   "venue": "MIT Press",
+   "volume": "",
+   "issue": "",
+   "pages": "",
+   "doi": "10.7551/mitpress/3206.001.0001",
+   "url": "https://doi.org/10.7551/mitpress/3206.001.0001",
+   "used_for": "GPR・周辺尤度",
+   "publisher": "MIT Press",
+   "isbn": "026218253X",
+   "status": "obtained",
+   "file": "sources/2006_MIT_Rasmussen_Williams_Gaussian_Processes_for_Machine_Learning.pdf",
+   "source_url": "http://gaussianprocess.org/gpml/chapters/RW.pdf",
+   "reason": "著者の公式サイトで無料公開されている全文 PDF"
+  },
+  {
+   "key": "noll1976",
+   "itemType": "journalArticle",
+   "title": "Zernike polynomials and atmospheric turbulence",
+   "authors": [
+    "Noll, R. J."
+   ],
+   "year": 1976,
+   "venue": "Journal of the Optical Society of America",
+   "volume": "66",
+   "issue": "3",
+   "pages": "207-211",
+   "doi": "10.1364/JOSA.66.000207",
+   "url": "https://doi.org/10.1364/JOSA.66.000207",
+   "used_for": "Zernike 多項式の正規化と番号",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "hanley1982",
+   "itemType": "journalArticle",
+   "title": "The meaning and use of the area under a receiver operating characteristic (ROC) curve",
+   "authors": [
+    "Hanley, J. A.",
+    "McNeil, B. J."
+   ],
+   "year": 1982,
+   "venue": "Radiology",
+   "volume": "143",
+   "issue": "1",
+   "pages": "29-36",
+   "doi": "10.1148/radiology.143.1.7063747",
+   "url": "https://doi.org/10.1148/radiology.143.1.7063747",
+   "used_for": "ROC-AUC の信頼区間",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "wilson1927",
+   "itemType": "journalArticle",
+   "title": "Probable inference, the law of succession, and statistical inference",
+   "authors": [
+    "Wilson, E. B."
+   ],
+   "year": 1927,
+   "venue": "Journal of the American Statistical Association",
+   "volume": "22",
+   "issue": "158",
+   "pages": "209-212",
+   "doi": "10.1080/01621459.1927.10502953",
+   "url": "https://doi.org/10.1080/01621459.1927.10502953",
+   "used_for": "比率の信頼区間",
+   "status": "not_obtained",
+   "reason": "出版社の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "montgomery2001",
+   "itemType": "book",
+   "title": "Introduction to Statistical Quality Control (4th ed.)",
+   "authors": [
+    "Montgomery, D. C."
+   ],
+   "year": 2001,
+   "venue": "John Wiley & Sons",
+   "volume": "",
+   "issue": "",
+   "pages": "",
+   "doi": "",
+   "url": "",
+   "used_for": "管理図・ARL・M3S の背景",
+   "edition": "4",
+   "isbn": "0-471-31648-2",
+   "publisher": "John Wiley & Sons",
+   "status": "not_obtained",
+   "reason": "書籍で、電子版の正規の無料公開がない"
+  },
+  {
+   "key": "atkinson2007",
+   "itemType": "book",
+   "title": "Optimum Experimental Designs, with SAS",
+   "authors": [
+    "Atkinson, A. C.",
+    "Donev, A. N.",
+    "Tobias, R. D."
+   ],
+   "year": 2007,
+   "venue": "Oxford University Press",
+   "volume": "",
+   "issue": "",
+   "pages": "",
+   "doi": "",
+   "url": "",
+   "used_for": "D 最適・I 最適計画",
+   "publisher": "Oxford University Press",
+   "status": "not_obtained",
+   "reason": "書籍で、電子版の正規の無料公開がない"
+  },
+  {
+   "key": "adel2007",
+   "itemType": "conferencePaper",
+   "title": "The challenges of transitioning from linear to high-order overlay control in advanced lithography",
+   "authors": [
+    "Adel, M.",
+    "Izikson, P.",
+    "Tien, D.",
+    "Huang, C. K.",
+    "Robinson, J. C.",
+    "Eichelberger, B."
+   ],
+   "year": 2007,
+   "venue": "Proc. SPIE 6827 (Quantum Optics, Optical Data Storage, and Advanced Microlithography)",
+   "volume": "6827",
+   "issue": "",
+   "pages": "682722",
+   "doi": "10.1117/12.778457",
+   "url": "https://doi.org/10.1117/12.778457",
+   "used_for": "高次 Overlay 補正の背景",
+   "status": "not_obtained",
+   "reason": "SPIE の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  },
+  {
+   "key": "pike2012",
+   "itemType": "conferencePaper",
+   "title": "High-order wafer alignment in manufacturing",
+   "authors": [
+    "Pike, M.",
+    "Felix, N.",
+    "Menon, V.",
+    "Ausschnitt, C.",
+    "Wiltshire, T.",
+    "Meyers, S.",
+    "Kim, W.",
+    "Minghetti, B."
+   ],
+   "year": 2012,
+   "venue": "Proc. SPIE 8324 (Metrology, Inspection, and Process Control for Microlithography XXVI)",
+   "volume": "8324",
+   "issue": "",
+   "pages": "832408",
+   "doi": "10.1117/12.916483",
+   "url": "https://doi.org/10.1117/12.916483",
+   "used_for": "高次 Wafer Alignment の背景",
+   "status": "not_obtained",
+   "reason": "SPIE の有料論文で、既存の閲覧権限では本文を取得できない（書誌は Crossref で確認）"
+  }
+ ]
+}
