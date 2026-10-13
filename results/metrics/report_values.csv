@@ -1,0 +1,194 @@
+key,text,raw,table,query,column,agg,fmt
+p1_blind_t2q99,52.0%,0.5202,phase1_detection,"detector == 'T2_raw_q99' and alpha == 0.01 and pattern in ['B3','B5','B6','B7','B8','B9','B10']",detection_rate,mean,percent
+p1_blind_m3s,13.5%,0.13497142857142858,phase1_detection,"detector == 'M3S_XY' and alpha == 0.01 and pattern in ['B3','B5','B6','B7','B8','B9','B10']",detection_rate,mean,percent
+b10_m3s_8,1.7%,0.017,phase1_detection,detector == 'M3S_XY' and alpha == 0.01 and pattern == 'B10' and amplitude == 8,detection_rate,first,percent
+b10_md4_8,90.4%,0.904,phase1_detection,detector == 'MD_d4' and alpha == 0.01 and pattern == 'B10' and amplitude == 8,detection_rate,first,percent
+p1_or_mean,56.7%,0.5674199999999999,phase1_representatives,family == 'OR',mean_detection,first,percent
+p1_t2q99_mean,49.9%,0.49866,phase1_representatives,family == 'M4',mean_detection,first,percent
+p2_rmst_t2ewma,95.7,95.6650460058553,phase2_ranking,detector == 'T2_raw_q99|EWMA(λ=0.05)',mean_rmst_delay,first,{:.1f}
+p2_rmst_m3sshew,117.4,117.39631834215167,phase2_ranking,detector == 'M3S_XY|Shewhart',mean_rmst_delay,first,{:.1f}
+p3_t2_b9_full,0.82,0.8216000000000001,phase3_single,level == 'density1_realistic_noise1_orderown' and monitor == 'T2_raw_q99' and sweep == 'single_factor' and pattern == 'B9',detection_rate,mean,{:.2f}
+p3_t2_b9_25,0.18,0.18039999999999998,phase3_single,level == 'density0.25_realistic_noise1_orderown' and monitor == 'T2_raw_q99' and sweep == 'single_factor' and pattern == 'B9',detection_rate,mean,{:.2f}
+p3_t2_b9_n3,0.52,0.5156,phase3_single,level == 'density1_realistic_noise3_orderown' and monitor == 'T2_raw_q99' and sweep == 'single_factor' and pattern == 'B9',detection_rate,mean,{:.2f}
+b10_max_m3s_diff,3.6e-14,3.5527136788005016e-14,phase1_b10_checks,,max_abs_m3s_diff_nm,max,{:.1e}
+b10_capped_8,78%,0.784,phase1_b10_checks,amplitude == 8,capped_fraction,first,percent0
+b10_capped_16,100%,1.0,phase1_b10_checks,amplitude == 16,capped_fraction,first,percent0
+gpr_shot_sd,0.50,0.4964109941166651,phase1_monitor_info,monitor == 'GPR_rbf_residual',gpr_X_shot_sd,first,{:.2f}
+gpr_mark_sd,1.04,1.042699922992377,phase1_monitor_info,monitor == 'GPR_rbf_residual',gpr_X_mark_sd,first,{:.2f}
+fpr001_min,0.85%,0.00852,phase1_thresholds,alpha == 0.01,fpr,min,percent2
+fpr001_max,1.17%,0.01166,phase1_thresholds,alpha == 0.01,fpr,max,percent2
+fpr0001_min,0.06%,0.00058,phase1_thresholds,alpha == 0.001,fpr,min,percent2
+fpr0001_max,0.14%,0.00144,phase1_thresholds,alpha == 0.001,fpr,max,percent2
+spe99_theoretical_fpr,97.9%,0.97922,phase1_thresholds,detector == 'SPE_raw_q99' and alpha == 0.001,fpr_theoretical,first,percent
+t2q99_theoretical_fpr,0.00%,0.0,phase1_thresholds,detector == 'T2_raw_q99' and alpha == 0.001,fpr_theoretical,first,percent2
+p1_gpr_mean,39.3%,0.39314,phase1_representatives,family == 'M6',mean_detection,first,percent
+p1_md_mean,35.7%,0.3571999999999999,phase1_representatives,family == 'M3',mean_detection,first,percent
+p1_spe_mean,30.5%,0.3054,phase1_representatives,family == 'M5',mean_detection,first,percent
+p1_m3s_mean,27.6%,0.2756,phase1_representatives,family == 'M1',mean_detection,first,percent
+p1_spc_mean,26.6%,0.26608,phase1_representatives,family == 'M2',mean_detection,first,percent
+p1_or3_mean,51.0%,0.50954,phase1_ranking,detector == 'OR[T2_raw_q95+SPE_raw_q95+GPR_matern52_residual]',mean_detection,first,percent
+p1_t2q99_mean_005,56.4%,0.5640200000000001,phase1_detection,detector == 'T2_raw_q99' and alpha == 0.05,detection_rate,mean,percent
+p1_t2q99_mean_0001,44.6%,0.4462,phase1_detection,detector == 'T2_raw_q99' and alpha == 0.001,detection_rate,mean,percent
+p1_m3s_mean_005,36.0%,0.3602600000000001,phase1_detection,detector == 'M3S_XY' and alpha == 0.05,detection_rate,mean,percent
+p1_m3s_mean_0001,21.3%,0.21307999999999994,phase1_detection,detector == 'M3S_XY' and alpha == 0.001,detection_rate,mean,percent
+p1_md_ewma04,29.5%,0.2951,phase1_ranking,detector == 'MD_d5|EWMA-scalar(λ=0.4)',mean_detection,first,percent
+p1_md_ewma005,17.7%,0.17668,phase1_ranking,detector == 'MD_d5|EWMA-scalar(λ=0.05)',mean_detection,first,percent
+p1_md_mewma04,19.9%,0.19918,phase1_ranking,detector == 'MD_d5|EWMA(λ=0.4)',mean_detection,first,percent
+p1_md_cusum05,0.6%,0.00646,phase1_ranking,detector == 'MD_d5|CUSUM(k=0.5)',mean_detection,first,percent
+p1_blind_or5,56.2%,0.5615428571428572,phase1_detection,"detector == 'OR[M3S_XY+MD_d4+T2_raw_q99+SPE_raw_q99+GPR_rbf_full]' and alpha == 0.01 and pattern in ['B3','B5','B6','B7','B8','B9','B10']",detection_rate,mean,percent
+p1_blind_or,51.0%,0.5102,phase1_detection,"detector == 'OR[T2_raw_q95+SPE_raw_q95+GPR_matern52_residual]' and alpha == 0.01 and pattern in ['B3','B5','B6','B7','B8','B9','B10']",detection_rate,mean,percent
+p1_blind_gpr,41.2%,0.4115714285714286,phase1_detection,"detector == 'GPR_rbf_full' and alpha == 0.01 and pattern in ['B3','B5','B6','B7','B8','B9','B10']",detection_rate,mean,percent
+p1_blind_spe,37.9%,0.3793714285714286,phase1_detection,"detector == 'SPE_raw_q99' and alpha == 0.01 and pattern in ['B3','B5','B6','B7','B8','B9','B10']",detection_rate,mean,percent
+p1_blind_md,28.5%,0.2853142857142858,phase1_detection,"detector == 'MD_d5' and alpha == 0.01 and pattern in ['B3','B5','B6','B7','B8','B9','B10']",detection_rate,mean,percent
+b10_md5_8,73.3%,0.733,phase1_detection,detector == 'MD_d5' and alpha == 0.01 and pattern == 'B10' and amplitude == 8,detection_rate,first,percent
+b10_spc4_8,69.8%,0.698,phase1_detection,detector == 'SPC_d4' and alpha == 0.01 and pattern == 'B10' and amplitude == 8,detection_rate,first,percent
+b10_t2q99_8,21.6%,0.216,phase1_detection,detector == 'T2_raw_q99' and alpha == 0.01 and pattern == 'B10' and amplitude == 8,detection_rate,first,percent
+b10_spe99_8,1.2%,0.012,phase1_detection,detector == 'SPE_raw_q99' and alpha == 0.01 and pattern == 'B10' and amplitude == 8,detection_rate,first,percent
+b10_gpr_8,1.5%,0.015,phase1_detection,detector == 'GPR_rbf_full' and alpha == 0.01 and pattern == 'B10' and amplitude == 8,detection_rate,first,percent
+perm_shuffle_md,0.0%,0.0,phase1_b10_permutation,detector == 'MD_d5' and alpha == 0.01 and kind == 'shuffle',detection_rate,first,percent
+perm_mirror_md,43.0%,0.4305,phase1_b10_permutation,"detector == 'MD_d5' and alpha == 0.01 and kind in ['mirror_x', 'mirror_y']",detection_rate,mean,percent
+perm_rot_max,16.6%,0.166,phase1_b10_permutation,alpha == 0.01 and kind == 'rot180',detection_rate,max,percent
+mda_m3s_b1,2.7,2.6831227232427586,phase1_mda,detector == 'M3S_XY' and alpha == 0.01 and pattern == 'B1',mda50,first,{:.1f}
+mda_m3s_b2,3.1,3.119268658043181,phase1_mda,detector == 'M3S_XY' and alpha == 0.01 and pattern == 'B2',mda50,first,{:.1f}
+mda_md_b6,5.4,5.354174676125825,phase1_mda,detector == 'MD_d5' and alpha == 0.01 and pattern == 'B6',mda50,first,{:.1f}
+mda_spc_b6,11.7,11.748037136017365,phase1_mda,detector == 'SPC_d4' and alpha == 0.01 and pattern == 'B6',mda50,first,{:.1f}
+mda_t2_b9,1.3,1.3275168367888344,phase1_mda,detector == 'T2_raw_q99' and alpha == 0.01 and pattern == 'B9',mda50,first,{:.1f}
+mda_gpr_b9,1.5,1.5116532522199515,phase1_mda,detector == 'GPR_rbf_full' and alpha == 0.01 and pattern == 'B9',mda50,first,{:.1f}
+mda_t2_b8,5.6,5.585058846304786,phase1_mda,detector == 'T2_raw_q99' and alpha == 0.01 and pattern == 'B8',mda50,first,{:.1f}
+kappa_b3,9.3,9.284342878983448,phase1_pattern_sizes,pattern == 'B3' and amplitude == 1,kappa_mean,first,{:.1f}
+kappa_b9,6.9,6.8764022681061725,phase1_pattern_sizes,pattern == 'B9' and amplitude == 1,kappa_mean,first,{:.1f}
+kappa_b7,5.0,5.021896757049136,phase1_pattern_sizes,pattern == 'B7' and amplitude == 1,kappa_mean,first,{:.1f}
+p2_arl_min,341,340.576,phase2_arl0,,arl,min,{:.0f}
+p2_arl_max,395,394.567,phase2_arl0,,arl,max,{:.0f}
+p2_null_min,149,148.7016706443914,phase2_ranking,pre_change_false_alarm_rate > 0.1,null_rmst_delay,min,{:.0f}
+p2_null_max,158,157.89961880559085,phase2_ranking,pre_change_false_alarm_rate > 0.1,null_rmst_delay,max,{:.0f}
+p2_rmst_mdewma,100.0,99.97713275072826,phase2_ranking,detector == 'MD_d5|EWMA(λ=0.05)',mean_rmst_delay,first,{:.1f}
+p2_rmst_m3scusum,107.5,107.5199978982766,phase2_ranking,detector == 'M3S_XY|CUSUM(k=0.25)',mean_rmst_delay,first,{:.1f}
+p2_rmst_speewma,108.5,108.45052704852824,phase2_ranking,detector == 'SPE_raw_q99|EWMA(λ=0.05)',mean_rmst_delay,first,{:.1f}
+p2_rmst_gprewma,109.0,109.02047350855236,phase2_ranking,detector == 'GPR_rbf_full|EWMA(λ=0.05)',mean_rmst_delay,first,{:.1f}
+p2_rmst_spcbest,123.4,123.35981879477455,phase2_ranking,detector == 'SPC_d4|CUSUM(k=1)',mean_rmst_delay,first,{:.1f}
+p2_a1_1_mdewma,73.8,73.80503537245109,phase2_delays,detector == 'MD_d5|EWMA(λ=0.05)' and pattern != 'no_change' and pattern == 'A1' and amplitude == 1.0,rmst_delay,mean,{:.1f}
+p2_a1_1_t2ewma,75.6,75.56587202007528,phase2_delays,detector == 'T2_raw_q99|EWMA(λ=0.05)' and pattern != 'no_change' and pattern == 'A1' and amplitude == 1.0,rmst_delay,mean,{:.1f}
+p2_a1_1_m3s,109.3,109.25771604938272,phase2_delays,detector == 'M3S_XY|Shewhart' and pattern != 'no_change' and pattern == 'A1' and amplitude == 1.0,rmst_delay,mean,{:.1f}
+p2_a1_3_mdewma,13.2,13.24219725343321,phase2_delays,detector == 'MD_d5|EWMA(λ=0.05)' and pattern != 'no_change' and pattern == 'A1' and amplitude == 3.0,rmst_delay,mean,{:.1f}
+p2_a1_3_t2ewma,13.6,13.593684650773737,phase2_delays,detector == 'T2_raw_q99|EWMA(λ=0.05)' and pattern != 'no_change' and pattern == 'A1' and amplitude == 3.0,rmst_delay,mean,{:.1f}
+p2_a1_3_m3s,56.6,56.561287477954146,phase2_delays,detector == 'M3S_XY|Shewhart' and pattern != 'no_change' and pattern == 'A1' and amplitude == 3.0,rmst_delay,mean,{:.1f}
+p2_a1_local_1_speewma,5,5.0,phase2_delays,detector == 'SPE_raw_q99|EWMA(λ=0.05)' and pattern != 'no_change' and pattern == 'A1' and amplitude == 1.0 and component == 'local',median_delay,first,{:.0f}
+p2_a1_local_1_m3s,180,180.0,phase2_delays,detector == 'M3S_XY|Shewhart' and pattern != 'no_change' and pattern == 'A1' and amplitude == 1.0 and component == 'local',median_delay,first,{:.0f}
+p2_a2_3_t2ewma,54.4,54.437473860309495,phase2_delays,detector == 'T2_raw_q99|EWMA(λ=0.05)' and pattern != 'no_change' and pattern == 'A2' and amplitude == 3.0,rmst_delay,mean,{:.1f}
+p2_a2_3_mdewma,55.6,55.631294215563884,phase2_delays,detector == 'MD_d5|EWMA(λ=0.05)' and pattern != 'no_change' and pattern == 'A2' and amplitude == 3.0,rmst_delay,mean,{:.1f}
+p2_a2_3_m3s,88.6,88.61331569664902,phase2_delays,detector == 'M3S_XY|Shewhart' and pattern != 'no_change' and pattern == 'A2' and amplitude == 3.0,rmst_delay,mean,{:.1f}
+p2_a3_3_t2ewma,45.3,45.31848598912589,phase2_delays,detector == 'T2_raw_q99|EWMA(λ=0.05)' and pattern != 'no_change' and pattern == 'A3' and amplitude == 3.0,rmst_delay,mean,{:.1f}
+p2_a3_3_mdewma,45.7,45.712650853100286,phase2_delays,detector == 'MD_d5|EWMA(λ=0.05)' and pattern != 'no_change' and pattern == 'A3' and amplitude == 3.0,rmst_delay,mean,{:.1f}
+p2_a3_3_m3s,86.5,86.46649029982363,phase2_delays,detector == 'M3S_XY|Shewhart' and pattern != 'no_change' and pattern == 'A3' and amplitude == 3.0,rmst_delay,mean,{:.1f}
+p2_a4_3_mdewma,38.2,38.22034956304619,phase2_delays,detector == 'MD_d5|EWMA(λ=0.05)' and pattern != 'no_change' and pattern == 'A4' and amplitude == 3.0,rmst_delay,mean,{:.1f}
+p2_a4_3_mdshew,43.6,43.649373108517075,phase2_delays,detector == 'MD_d5|Shewhart' and pattern != 'no_change' and pattern == 'A4' and amplitude == 3.0,rmst_delay,mean,{:.1f}
+p2_a4_3_t2ewma,47.2,47.22271016311168,phase2_delays,detector == 'T2_raw_q99|EWMA(λ=0.05)' and pattern != 'no_change' and pattern == 'A4' and amplitude == 3.0,rmst_delay,mean,{:.1f}
+p2_a4_3_m3scusum,59.4,59.39848675914249,phase2_delays,detector == 'M3S_XY|CUSUM(k=0.25)' and pattern != 'no_change' and pattern == 'A4' and amplitude == 3.0,rmst_delay,mean,{:.1f}
+p2_a4_3_speewma,102.2,102.17919649960226,phase2_delays,detector == 'SPE_raw_q99|EWMA(λ=0.05)' and pattern != 'no_change' and pattern == 'A4' and amplitude == 3.0,rmst_delay,mean,{:.1f}
+p2_a4_1_mdewma,140.8,140.7906783187682,phase2_delays,detector == 'MD_d5|EWMA(λ=0.05)' and pattern != 'no_change' and pattern == 'A4' and amplitude == 1.0,rmst_delay,mean,{:.1f}
+p2_null_mdewma,152.2,152.16354556803995,phase2_ranking,detector == 'MD_d5|EWMA(λ=0.05)',null_rmst_delay,first,{:.1f}
+p2_local_speewma,28.5,28.50930787589499,phase2_delays,detector == 'SPE_raw_q99|EWMA(λ=0.05)' and pattern != 'no_change' and component == 'local',rmst_delay,mean,{:.1f}
+p2_radial_m3scusum,71.5,71.46279949558638,phase2_delays,detector == 'M3S_XY|CUSUM(k=0.25)' and pattern != 'no_change' and component == 'radial',rmst_delay,mean,{:.1f}
+p2_radial_t2ewma,107.4,107.380112923463,phase2_delays,detector == 'T2_raw_q99|EWMA(λ=0.05)' and pattern != 'no_change' and component == 'radial',rmst_delay,mean,{:.1f}
+p2_low_mdewma,109.5,109.50767790262174,phase2_delays,detector == 'MD_d5|EWMA(λ=0.05)' and pattern != 'no_change' and component == 'low',rmst_delay,mean,{:.1f}
+p2_high_mdewma,103.8,103.75374531835207,phase2_delays,detector == 'MD_d5|EWMA(λ=0.05)' and pattern != 'no_change' and component == 'high',rmst_delay,mean,{:.1f}
+p2_prefa_min,16%,0.162,phase2_ranking,pre_change_false_alarm_rate > 0.1,pre_change_false_alarm_rate,min,percent0
+p2_prefa_max,26%,0.26,phase2_ranking,pre_change_false_alarm_rate > 0.1,pre_change_false_alarm_rate,max,percent0
+p2_prefa_t2cusum,0.0%,0.0,phase2_ranking,detector == 'T2_raw_q99|CUSUM(k=1)',pre_change_false_alarm_rate,first,percent
+p2_det_specusum,8.3%,0.0834916666666666,phase2_ranking,detector == 'SPE_raw_q99|CUSUM(k=1)',mean_detection_rate,first,percent
+p2_detonly_t2ewma,71.8,71.82293441547229,phase2_delays,detector == 'T2_raw_q99|EWMA(λ=0.05)' and pattern != 'no_change',mean_delay_detected,mean,{:.1f}
+p2_detonly_m3s,79.9,79.89253850353965,phase2_delays,detector == 'M3S_XY|Shewhart' and pattern != 'no_change',mean_delay_detected,mean,{:.1f}
+rho_phi_95,0.91,0.9120176249653196,phase2_rho_sweep,rho == 0.95 and prewhiten == True,ar1_phi,first,{:.2f}
+rho_t2e_0,53.2,53.2109375,phase2_rho_sweep,detector == 'T2_raw_q99|EWMA(λ=0.05)' and rho == 0.0 and prewhiten == False and pattern != 'no_change',rmst_delay,mean,{:.1f}
+rho_t2e_95,105.7,105.72012048192771,phase2_rho_sweep,detector == 'T2_raw_q99|EWMA(λ=0.05)' and rho == 0.95 and prewhiten == False and pattern != 'no_change',rmst_delay,mean,{:.1f}
+rho_mde_0,58.1,58.067901234567884,phase2_rho_sweep,detector == 'MD_d5|EWMA(λ=0.05)' and rho == 0.0 and prewhiten == False and pattern != 'no_change',rmst_delay,mean,{:.1f}
+rho_mde_95,116.1,116.06136919315402,phase2_rho_sweep,detector == 'MD_d5|EWMA(λ=0.05)' and rho == 0.95 and prewhiten == False and pattern != 'no_change',rmst_delay,mean,{:.1f}
+rho_t2s_0,102.9,102.86430412371132,phase2_rho_sweep,detector == 'T2_raw_q99|Shewhart' and rho == 0.0 and prewhiten == False and pattern != 'no_change',rmst_delay,mean,{:.1f}
+rho_t2s_95,110.3,110.2757142857143,phase2_rho_sweep,detector == 'T2_raw_q99|Shewhart' and rho == 0.95 and prewhiten == False and pattern != 'no_change',rmst_delay,mean,{:.1f}
+rho_m3ss_0,140.6,140.5908521303258,phase2_rho_sweep,detector == 'M3S_XY|Shewhart' and rho == 0.0 and prewhiten == False and pattern != 'no_change',rmst_delay,mean,{:.1f}
+rho_m3ss_95,131.8,131.7602425876011,phase2_rho_sweep,detector == 'M3S_XY|Shewhart' and rho == 0.95 and prewhiten == False and pattern != 'no_change',rmst_delay,mean,{:.1f}
+rho_mdc_95,164.5,164.54919999999998,phase2_rho_sweep,detector == 'MD_d5|CUSUM(k=1)' and rho == 0.95 and prewhiten == False and pattern != 'no_change',rmst_delay,mean,{:.1f}
+rho_mdc_95_pw,114.9,114.92115789473682,phase2_rho_sweep,detector == 'MD_d5|CUSUM(k=1)' and rho == 0.95 and prewhiten == True and pattern != 'no_change',rmst_delay,mean,{:.1f}
+rho_t2e_95_pw,103.5,103.52369668246445,phase2_rho_sweep,detector == 'T2_raw_q99|EWMA(λ=0.05)' and rho == 0.95 and prewhiten == True and pattern != 'no_change',rmst_delay,mean,{:.1f}
+rho_t2s_95_pw,134.9,134.8946949602122,phase2_rho_sweep,detector == 'T2_raw_q99|Shewhart' and rho == 0.95 and prewhiten == True and pattern != 'no_change',rmst_delay,mean,{:.1f}
+p3_dof_25,59,59.0,phase3_levels,level == 'density0.25_realistic_noise1_orderown',min_dof_order5,first,{:.0f}
+p3_sens_noise,0.16,0.1634733333333333,phase3_factor_effects,factor == 'noise_scale',sensitivity,first,{:.2f}
+p3_sens_density,0.12,0.1202,phase3_factor_effects,factor == 'density',sensitivity,first,{:.2f}
+p3_sens_order,0.05,0.0474666666666666,phase3_factor_effects,factor == 'order',sensitivity,first,{:.2f}
+p3_sens_layout,0.02,0.0228533333333333,phase3_factor_effects,factor == 'layout',sensitivity,first,{:.2f}
+p3_range_noise,0.06,0.0648199999999999,phase3_factor_effects,factor == 'noise_scale',range,first,{:.2f}
+p3_range_density,0.05,0.0479733333333333,phase3_factor_effects,factor == 'density',range,first,{:.2f}
+p3_t2_b8_full,0.40,0.3966,phase3_single,level == 'density1_realistic_noise1_orderown' and monitor == 'T2_raw_q99' and sweep == 'single_factor' and pattern == 'B8',detection_rate,mean,{:.2f}
+p3_t2_b8_25,0.10,0.1012,phase3_single,level == 'density0.25_realistic_noise1_orderown' and monitor == 'T2_raw_q99' and sweep == 'single_factor' and pattern == 'B8',detection_rate,mean,{:.2f}
+p3_t2_b7_full,0.64,0.637,phase3_single,level == 'density1_realistic_noise1_orderown' and monitor == 'T2_raw_q99' and sweep == 'single_factor' and pattern == 'B7',detection_rate,mean,{:.2f}
+p3_t2_b7_25,0.47,0.4702,phase3_single,level == 'density0.25_realistic_noise1_orderown' and monitor == 'T2_raw_q99' and sweep == 'single_factor' and pattern == 'B7',detection_rate,mean,{:.2f}
+p3_t2_b3_full,0.83,0.8257999999999999,phase3_single,level == 'density1_realistic_noise1_orderown' and monitor == 'T2_raw_q99' and sweep == 'single_factor' and pattern == 'B3',detection_rate,mean,{:.2f}
+p3_t2_b3_25,0.69,0.6942,phase3_single,level == 'density0.25_realistic_noise1_orderown' and monitor == 'T2_raw_q99' and sweep == 'single_factor' and pattern == 'B3',detection_rate,mean,{:.2f}
+p3_md_all_full,0.36,0.35766,phase3_single,level == 'density1_realistic_noise1_orderown' and monitor == 'MD_d5' and sweep == 'single_factor' and pattern != 'normal',detection_rate,mean,{:.2f}
+p3_md_all_25,0.36,0.35846000000000006,phase3_single,level == 'density0.25_realistic_noise1_orderown' and monitor == 'MD_d5' and sweep == 'single_factor' and pattern != 'normal',detection_rate,mean,{:.2f}
+p3_gpr_b4_full,0.19,0.1944,phase3_single,level == 'density1_realistic_noise1_orderown' and monitor == 'GPR_rbf_full' and sweep == 'single_factor' and pattern == 'B4',detection_rate,mean,{:.2f}
+p3_gpr_b4_25,0.35,0.35300000000000004,phase3_single,level == 'density0.25_realistic_noise1_orderown' and monitor == 'GPR_rbf_full' and sweep == 'single_factor' and pattern == 'B4',detection_rate,mean,{:.2f}
+p3_layout_max,0.09,0.0862,phase3_factor_effects,factor == 'layout',max_cell_range,first,{:.2f}
+p3_layout_min_mean,0.36,0.3586866666666666,phase3_factor_effects,factor == 'layout',min_mean_detection,first,{:.2f}
+p3_layout_max_mean,0.37,0.3677066666666667,phase3_factor_effects,factor == 'layout',max_mean_detection,first,{:.2f}
+p3_t2_b8_n3,0.07,0.06899999999999999,phase3_single,level == 'density1_realistic_noise3_orderown' and monitor == 'T2_raw_q99' and sweep == 'single_factor' and pattern == 'B8',detection_rate,mean,{:.2f}
+p3_t2_b7_n3,0.42,0.42300000000000004,phase3_single,level == 'density1_realistic_noise3_orderown' and monitor == 'T2_raw_q99' and sweep == 'single_factor' and pattern == 'B7',detection_rate,mean,{:.2f}
+p3_m3s_all_full,0.27,0.26876,phase3_single,level == 'density1_realistic_noise1_orderown' and monitor == 'M3S_XY' and sweep == 'single_factor' and pattern != 'normal',detection_rate,mean,{:.2f}
+p3_m3s_all_n3,0.27,0.26527999999999996,phase3_single,level == 'density1_realistic_noise3_orderown' and monitor == 'M3S_XY' and sweep == 'single_factor' and pattern != 'normal',detection_rate,mean,{:.2f}
+p3_gpr_b9_n05,0.93,0.9294,phase3_single,level == 'density1_realistic_noise0.5_orderown' and monitor == 'GPR_rbf_full' and sweep == 'single_factor' and pattern == 'B9',detection_rate,mean,{:.2f}
+p3_t2_b9_n05,0.28,0.2804,phase3_single,level == 'density1_realistic_noise0.5_orderown' and monitor == 'T2_raw_q99' and sweep == 'single_factor' and pattern == 'B9',detection_rate,mean,{:.2f}
+p3_k_t2_n1,311,311.0,phase3_levels,level == 'density1_realistic_noise1_orderown',pca_components_T2_raw_q99,first,{:.0f}
+p3_k_t2_n05,66,66.0,phase3_levels,level == 'density1_realistic_noise0.5_orderown',pca_components_T2_raw_q99,first,{:.0f}
+p3_or_all_n05,0.56,0.5635,phase3_single,level == 'density1_realistic_noise0.5_orderown' and monitor == 'OR[top]' and sweep == 'single_factor' and pattern != 'normal',detection_rate,mean,{:.2f}
+p3_or_all_full,0.54,0.53538,phase3_single,level == 'density1_realistic_noise1_orderown' and monitor == 'OR[top]' and sweep == 'single_factor' and pattern != 'normal',detection_rate,mean,{:.2f}
+p3_md_b5_o3,0.02,0.022600000000000002,phase3_single,level == 'density1_realistic_noise1_order3' and config == 'MD_d5' and sweep == 'single_factor' and pattern == 'B5',detection_rate,mean,{:.2f}
+p3_md_b5_o5,0.50,0.5022,phase3_single,level == 'density1_realistic_noise1_order5' and config == 'MD_d5' and sweep == 'single_factor' and pattern == 'B5',detection_rate,mean,{:.2f}
+p3_md_b10_o3,0.17,0.1722,phase3_single,level == 'density1_realistic_noise1_order3' and config == 'MD_d5' and sweep == 'single_factor' and pattern == 'B10',detection_rate,mean,{:.2f}
+p3_md_b10_o5,0.34,0.33819999999999995,phase3_single,level == 'density1_realistic_noise1_order5' and config == 'MD_d5' and sweep == 'single_factor' and pattern == 'B10',detection_rate,mean,{:.2f}
+p3_md_b4_o3,0.60,0.604,phase3_single,level == 'density1_realistic_noise1_order3' and config == 'MD_d5' and sweep == 'single_factor' and pattern == 'B4',detection_rate,mean,{:.2f}
+p3_md_b4_o5,0.52,0.5226,phase3_single,level == 'density1_realistic_noise1_order5' and config == 'MD_d5' and sweep == 'single_factor' and pattern == 'B4',detection_rate,mean,{:.2f}
+p3_int_full_n1,0.42,0.41568000000000005,phase3_interaction,density == 1.0 and noise_scale == 1.0 and config != 'M3S_XY' and monitor != 'OR[top]' and pattern != 'normal',detection_rate,mean,{:.2f}
+p3_int_25_n3,0.32,0.32278,phase3_interaction,density == 0.25 and noise_scale == 3.0 and config != 'M3S_XY' and monitor != 'OR[top]' and pattern != 'normal',detection_rate,mean,{:.2f}
+p3_int_b9_full_n1,0.57,0.5738666666666667,phase3_interaction,density == 1.0 and noise_scale == 1.0 and config != 'M3S_XY' and monitor != 'OR[top]' and pattern == 'B9',detection_rate,mean,{:.2f}
+p3_int_b9_25_n3,0.12,0.11946666666666667,phase3_interaction,density == 0.25 and noise_scale == 3.0 and config != 'M3S_XY' and monitor != 'OR[top]' and pattern == 'B9',detection_rate,mean,{:.2f}
+p3t_t2_full,69.0,68.96141374837872,phase3_temporal,detector == 'T2_raw_q99|EWMA(λ=0.05)' and level == 'density1_realistic_noise1_orderown' and pattern != 'no_change',rmst_delay,mean,{:.1f}
+p3t_t2_25,78.2,78.1844532279315,phase3_temporal,detector == 'T2_raw_q99|EWMA(λ=0.05)' and level == 'density0.25_realistic_noise1_orderown' and pattern != 'no_change',rmst_delay,mean,{:.1f}
+p3t_t2_n3,74.5,74.46632653061224,phase3_temporal,detector == 'T2_raw_q99|EWMA(λ=0.05)' and level == 'density1_realistic_noise3_orderown' and pattern != 'no_change',rmst_delay,mean,{:.1f}
+p3t_spe_local_full,22.6,22.57496653279786,phase3_temporal,detector == 'SPE_raw_q99|EWMA(λ=0.05)' and level == 'density1_realistic_noise1_orderown' and pattern != 'no_change' and component == 'local',rmst_delay,mean,{:.1f}
+p3t_spe_local_n3,64.4,64.40389784946237,phase3_temporal,detector == 'SPE_raw_q99|EWMA(λ=0.05)' and level == 'density1_realistic_noise3_orderown' and pattern != 'no_change' and component == 'local',rmst_delay,mean,{:.1f}
+p3t_t2_n05,83.2,83.23223514211885,phase3_temporal,detector == 'T2_raw_q99|EWMA(λ=0.05)' and level == 'density1_realistic_noise0.5_orderown' and pattern != 'no_change',rmst_delay,mean,{:.1f}
+apc_n_align,80,80.0,apc_single,alignment_condition == 'standard',n_alignment_points,first,{:.0f}
+apc_n_overlay,200,200.0,apc_single,alignment_condition == 'standard',n_overlay_points,first,{:.0f}
+apc_n_align_sparse,40,40.0,apc_single,alignment_condition == 'sparse_noisy',n_alignment_points,first,{:.0f}
+apc_s1_align_m3s,63.4%,0.6342666666666666,apc_single,alignment_condition == 'standard' and scenario == 'S1_linear' and monitor == 'alignment:M3S',detection_rate,mean,percent
+apc_s2_align_m3s,62.5%,0.6245999999999999,apc_single,alignment_condition == 'standard' and scenario == 'S2_cubic_radial' and monitor == 'alignment:M3S',detection_rate,mean,percent
+apc_s3local_align_spe,66.5%,0.6653333333333333,apc_single,alignment_condition == 'standard' and scenario == 'S3_local' and monitor == 'alignment:SPE',detection_rate,mean,percent
+apc_s3local_ovl_spe_o3,74.1%,0.741,apc_single,alignment_condition == 'standard' and scenario == 'S3_local' and monitor == 'overlay:SPE' and correction_order == 3,detection_rate,mean,percent
+apc_s1_coef_md_o3,61.9%,0.6188,apc_single,alignment_condition == 'standard' and scenario == 'S1_linear' and monitor == 'coefficient:MD' and correction_order == 3,detection_rate,mean,percent
+apc_s2_coef_md_o3,54.0%,0.5404,apc_single,alignment_condition == 'standard' and scenario == 'S2_cubic_radial' and monitor == 'coefficient:MD' and correction_order == 3,detection_rate,mean,percent
+apc_s3local_coef_md_o1,17.5%,0.1746,apc_single,alignment_condition == 'standard' and scenario == 'S3_local' and monitor == 'coefficient:MD' and correction_order == 1,detection_rate,mean,percent
+apc_s3local_coef_md_o5,52.6%,0.5256000000000001,apc_single,alignment_condition == 'standard' and scenario == 'S3_local' and monitor == 'coefficient:MD' and correction_order == 5,detection_rate,mean,percent
+apc_s1_ovl_m3s_max,1.1%,0.011,apc_single,alignment_condition == 'standard' and scenario == 'S1_linear' and monitor == 'overlay:M3S',detection_rate,max,percent
+apc_s2_ovl_m3s_o1,41.9%,0.41859999999999997,apc_single,alignment_condition == 'standard' and scenario == 'S2_cubic_radial' and monitor == 'overlay:M3S' and correction_order == 1,detection_rate,mean,percent
+apc_s2_ovl_m3s_o3,0.6%,0.006,apc_single,alignment_condition == 'standard' and scenario == 'S2_cubic_radial' and monitor == 'overlay:M3S' and correction_order == 3,detection_rate,mean,percent
+apc_normal_rms_o3,3.53,3.531403313151318,apc_single,alignment_condition == 'standard' and scenario == 'normal' and monitor == 'overlay:M3S' and correction_order == 3,true_overlay_rms_nm,mean,{:.2f}
+apc_s3local_ovl_t2_o3,80.8%,0.8076000000000001,apc_single,alignment_condition == 'standard' and scenario == 'S3_local' and monitor == 'overlay:T2' and correction_order == 3,detection_rate,mean,percent
+apc_sparse_rms_o5,10.21,10.212718019821658,apc_single,alignment_condition == 'sparse_noisy' and scenario == 'normal' and monitor == 'overlay:M3S' and correction_order == 5,true_overlay_rms_nm,mean,{:.2f}
+apc_sparse_rms_o3,5.27,5.272636634955874,apc_single,alignment_condition == 'sparse_noisy' and scenario == 'normal' and monitor == 'overlay:M3S' and correction_order == 3,true_overlay_rms_nm,mean,{:.2f}
+apc_normal_rms_o5,2.99,2.992587872262036,apc_single,alignment_condition == 'standard' and scenario == 'normal' and monitor == 'overlay:M3S' and correction_order == 5,true_overlay_rms_nm,mean,{:.2f}
+apc_sparse_s3local_t2_o3,75.9%,0.7588,apc_single,alignment_condition == 'sparse_noisy' and scenario == 'S3_local' and monitor == 'overlay:T2' and correction_order == 3,detection_rate,mean,percent
+apc_sparse_s3local_t2_o5,43.6%,0.4364,apc_single,alignment_condition == 'sparse_noisy' and scenario == 'S3_local' and monitor == 'overlay:T2' and correction_order == 5,detection_rate,mean,percent
+apc_sparse_s3local_m3s_o3,44.8%,0.44820000000000004,apc_single,alignment_condition == 'sparse_noisy' and scenario == 'S3_local' and monitor == 'overlay:M3S' and correction_order == 3,detection_rate,mean,percent
+apc_sparse_s3local_m3s_o5,25.1%,0.25060000000000004,apc_single,alignment_condition == 'sparse_noisy' and scenario == 'S3_local' and monitor == 'overlay:M3S' and correction_order == 5,detection_rate,mean,percent
+apc_flyer_rms16_o5,3.41,3.407562473055869,apc_single,alignment_condition == 'standard' and scenario == 'S4_alignment_flyer' and correction_order == 5 and amplitude == 16 and monitor == 'overlay:M3S',true_overlay_rms_nm,first,{:.2f}
+apc_flyer_align_spe,17.6%,0.17566666666666667,apc_single,alignment_condition == 'standard' and scenario == 'S4_alignment_flyer' and monitor == 'alignment:SPE',detection_rate,mean,percent
+apc_t_null_min,136,136.3711790393013,apc_temporal,pattern == 'no_change',rmst_delay,min,{:.0f}
+apc_t_null_max,162,162.0576131687243,apc_temporal,pattern == 'no_change',rmst_delay,max,{:.0f}
+apc_t_low_ovl_t2,142,142.46382978723403,apc_temporal,detector == 'overlay:T2|EWMA(λ=0.1)' and component == 'low',rmst_delay,mean,{:.0f}
+apc_t_low_align_t2,108,107.79330422125183,apc_temporal,detector == 'alignment:T2|EWMA(λ=0.1)' and component == 'low',rmst_delay,mean,{:.0f}
+apc_t_low_coef_md,111,111.23211875843454,apc_temporal,detector == 'coefficient:MD|EWMA(λ=0.1)' and component == 'low',rmst_delay,mean,{:.0f}
+apc_t_local_ovl_spe,46,45.5974025974026,apc_temporal,detector == 'overlay:SPE|EWMA(λ=0.1)' and component == 'local',rmst_delay,mean,{:.0f}
+apc_t_local_coef_md,124,123.61943319838058,apc_temporal,detector == 'coefficient:MD|EWMA(λ=0.1)' and component == 'local',rmst_delay,mean,{:.0f}
+b8_rms4,0.44,0.4430471029643226,phase1_pattern_sizes,pattern == 'B8' and amplitude == 4,rms_nm,first,{:.2f}
+p3_k_t2_n3,557,557.0,phase3_levels,level == 'density1_realistic_noise3_orderown',pca_components_T2_raw_q99,first,{:.0f}

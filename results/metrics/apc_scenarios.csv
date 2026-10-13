@@ -1,0 +1,7 @@
+scenario,category,description
+S1_linear,低次補正で除去できる異常,X 方向だけの倍率（x に比例する X のずれ）
+S2_cubic_radial,高次補正で除去できる異常,3次の放射状歪み（B1 と同じ形）
+S3_zernike89,補正モデル次数では表現できない異常,n = 8〜9 の Zernike（B7 と同じ形）
+S3_local,補正モデル次数では表現できない異常,局所変形（B3 と同じ形）
+S3_single_shot,補正モデル次数では表現できない異常,単一 Shot のずれ（B9 と同じ形）
+S4_alignment_flyer,ノイズ・外れ値を過学習する条件,Alignment の1マークだけの計測外れ値（実際のずれはない）
