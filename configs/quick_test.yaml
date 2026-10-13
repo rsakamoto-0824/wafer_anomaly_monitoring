@@ -1,0 +1,57 @@
+# 動作確認用の小さな設定（数分で全工程が終わる）。結果の数値は精度が低いので報告には使わない。
+extends: default.yaml
+output_dir: results_quick
+cache_dir: results_quick/cache
+
+phase1:
+  n_train: 800
+  n_calibration: 4000
+  n_evaluation: 4000
+  n_replicates: 100
+  history_length: 30
+  alphas: [0.05, 0.01]
+  block_size: 2000
+  ap_bootstrap: 20
+
+phase2:
+  n_train: 800
+  pilot:
+    n_series: 30
+    arl_calibration_runs: 60
+    arl_calibration_length: 1200
+  main:
+    n_series: 60
+    arl_calibration_runs: 80
+    arl_calibration_length: 1200
+    arl_validation_runs: 60
+    arl_validation_length: 1200
+  rho_sweep:
+    patterns: [A1]
+    components: [low]
+    n_series: 30
+    arl_calibration_runs: 60
+    arl_calibration_length: 1200
+    arl_validation_runs: 40
+    arl_validation_length: 1200
+
+phase3:
+  n_train: 800
+  n_calibration: 3000
+  n_evaluation: 3000
+  n_replicates: 100
+  temporal:
+    n_series: 30
+    arl_calibration_runs: 60
+    arl_calibration_length: 1200
+  block_size: 3000
+
+apc:
+  n_train: 800
+  n_calibration: 3000
+  n_evaluation: 3000
+  n_replicates: 100
+  temporal:
+    n_series: 30
+    arl_calibration_runs: 60
+    arl_calibration_length: 1200
+  block_size: 3000

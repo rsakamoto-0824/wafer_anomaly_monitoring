@@ -1,0 +1,38 @@
+# フルスケール評価の設定（本報告の default.yaml より大きい）。M1・メモリ 8 GB・6 並列で数時間かかる見込み。
+# - 誤報率 0.1% の管理限界を安定させるため、校正・評価の正常データを 4 倍にする
+# - Phase 2 の時系列相関 ρ の比較を、全パターン・全成分・1,000 系列で行う
+# - Phase 3 の経時変化も全パターン・全成分で行う
+extends: default.yaml
+output_dir: results_full
+cache_dir: results_full/cache
+
+phase1:
+  n_calibration: 200000
+  n_evaluation: 200000
+
+phase2:
+  rho_sweep:
+    patterns: [A1, A2, A3, A4]
+    components: [low, high, radial, tangential, asymmetric, local]
+    n_series: 1000
+    arl_calibration_runs: 1000
+    arl_validation_runs: 1000
+
+phase3:
+  n_calibration: 50000
+  n_evaluation: 50000
+  temporal:
+    patterns: [A1, A2, A3, A4]
+    components: [low, high, radial, tangential, asymmetric, local]
+    amplitudes: [0.25, 0.5, 1.0, 2.0, 3.0]
+    n_series: 1000
+    arl_calibration_runs: 1000
+
+apc:
+  n_calibration: 50000
+  n_evaluation: 50000
+  temporal:
+    patterns: [A1, A2, A3]
+    components: [low, high, radial, tangential, asymmetric, local]
+    n_series: 1000
+    arl_calibration_runs: 1000

@@ -4,3 +4,19 @@ __pycache__/
 *.pyc
 .env
 .env.local
+
+# Python の仮想環境・キャッシュ
+.venv/
+.pytest_cache/
+
+# 途中結果（再実行で作り直せる。大きいので Git に入れない）
+results/cache/
+results_quick/
+results_full/
+logs/
+
+# Office が開いている間に作るロックファイル
+~$*
+
+# 参考文献の本文（著作物なので Git に入れない。references.json に入手先を記録）
+references/sources/

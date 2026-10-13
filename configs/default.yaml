@@ -1,0 +1,176 @@
+# 既定の設定（本報告の計算に使った設定）。数値の根拠と仮定は design.md を参照。
+# 単位：座標 mm、計測値・Zernike 係数 nm。
+seed: 20261013
+output_dir: results          # 集計 CSV・Parquet、図、サンプル
+cache_dir: results/cache     # 途中結果（再実行時に再利用。Git に入れない）
+workers: 6                   # 並列プロセス数（M1・8 コア・メモリ 8 GB で 6 まで確認済み）
+
+wafer:
+  radius_mm: 150.0
+  edge_exclusion_mm: 3.0                 # 有効半径 147 mm（r < 147 の点だけ使う）
+  shot_size_mm: [26.0, 33.0]             # X 方向 26 mm × Y 方向 33 mm
+  grid_offset_mm: [0.0, 0.0]             # Wafer 中心に Shot 中心を置く格子
+  edge_shot_policy: any_mark_inside      # full_shot | all_marks_inside | any_mark_inside（外周の部分 Shot も使う）
+
+marks:                                   # Shot 中心からの相対座標 [mm]。並び順がマーク番号（1始まり）
+  alignment: [[-11.0, -14.5], [11.0, -14.5], [11.0, 14.5], [-11.0, 14.5]]
+  overlay: [[0.0, 0.0], [-7.0, -9.0], [7.0, -9.0], [7.0, 9.0], [-7.0, 9.0]]
+
+normal_process:
+  zernike_max_order: 7                   # 動径次数 7 まで（36項 × XY）。係数の並びは Fringe 番号
+  normalization: rms                     # rms（円板上の RMS で正規化）| none
+  sigma_by_order_nm: [3.0, 2.5, 1.5, 1.0, 0.7, 0.5, 0.35, 0.25]   # 次数 n = 0..7 の係数の標準偏差
+  high_order_start: 4                    # この次数以上に high_order_gain を掛ける
+  high_order_gain: 1.0
+  xy_same_mode_correlation: 0.0          # 同じモードの X 係数と Y 係数の相関（0 で独立）
+  mean_fingerprint_nm:                   # 正常時の平均（工程の指紋）[軸, n, m, 値]
+    - [X, 0, 0, 0.5]
+    - [X, 1, 1, 2.0]
+    - [Y, 1, -1, 2.0]
+    - [X, 1, -1, -0.5]
+    - [Y, 1, 1, 0.5]
+    - [X, 2, 2, 0.8]
+    - [Y, 2, -2, 0.6]
+    - [X, 3, 1, 1.0]
+    - [Y, 3, -1, 1.0]
+    - [X, 3, -3, 0.5]
+    - [Y, 3, 3, 0.4]
+  correlated_pairs:                      # 物理的に結び付く係数の組 [軸A, nA, mA, 軸B, nB, mB, 相関]
+    - [X, 1, 1, Y, 1, -1, 0.8]           # 等方倍率（X の x 項と Y の y 項）
+    - [X, 1, -1, Y, 1, 1, -0.8]          # 回転（X の y 項と Y の x 項は逆符号）
+    - [X, 3, 1, Y, 3, -1, 0.7]           # 3次の放射状歪み
+  rho: 0.7                               # 正常時の時系列相関（AR(1)）。Phase 2 で 0, 0.3, 0.7, 0.95 を比較
+
+noise:
+  mark_sigma_nm: 1.0                     # Mark 単位の独立誤差
+  shot_sigma_nm: 0.5                     # Shot 単位の共通誤差（同じ Shot の全マークに同じ値）
+  xy_correlation: 0.0                    # X と Y の計測誤差の相関
+  scale: 1.0                             # 基準に対する倍率（Phase 3 で 0.5, 1, 2, 3）
+
+anomaly:
+  local_width_mm: 20.0
+  local_radius_range: [0.3, 0.85]
+  asymmetry_softness: 0.1
+  b5_orders: [4, 5]
+  b7_orders: [8, 9]
+  b10_orders: [2, 3, 4]
+  scan_vector: [0.3, 1.0]
+  b9_level: shot
+
+monitoring:
+  polynomial_orders: [3, 4, 5]
+  mahalanobis_shrinkage: ledoit_wolf
+  pca_variance_ratios: [0.90, 0.95, 0.99]
+  pca_sources: [raw, coef]
+  pca_coef_order: 5
+  gpr_kernels: [rbf, matern52]
+  gpr_statistics: [residual, full]
+  # Phase 1 で EWMA・CUSUM（Wafer の流れの中での単発異常）に使う土台の手法
+  temporal_bases: [M3S_XY, SPC_d5, MD_d5, T2_raw_q95, SPE_raw_q95, GPR_matern52_residual]
+  ewma_lambdas: [0.05, 0.1, 0.2, 0.4]
+  cusum_k: [0.25, 0.5, 1.0]
+  md_scalar_ewma: true                   # Mahalanobis 距離そのものの EWMA も比べる
+  combinations:                          # OR 判定の組み合わせ（RQ6）。統合後の誤報率で校正する
+    - [T2_raw_q95, SPE_raw_q95]
+    - [M3S_XY, T2_raw_q95, SPE_raw_q95]
+    - [MD_d5, GPR_matern52_residual]
+    - [T2_raw_q95, SPE_raw_q95, GPR_matern52_residual]
+    - [MD_d5, SPE_raw_q95]
+    - [T2_raw_q99, SPE_raw_q99, GPR_rbf_full]               # Phase 1 の系統別代表（T²・SPE・GPR）
+    - [M3S_XY, MD_d4, T2_raw_q99, SPE_raw_q99, GPR_rbf_full] # 推奨案：M3S と Mahalanobis も加えた5指標
+
+phase1:
+  n_train: 3000                          # 学習（時系列順の正常 Wafer）
+  n_calibration: 50000                   # 管理限界の校正（独立な正常系列の最後の Wafer）
+  n_evaluation: 50000                    # 誤報率の評価（同上）
+  n_replicates: 1000                     # 異常パターン・振幅ごとの回数（全手法・全振幅で同じ正常 Wafer）
+  history_length: 100                    # 評価する Wafer の前に流す正常 Wafer の枚数（EWMA・CUSUM の状態）
+  amplitudes: [1, 2, 4, 8, 16]           # σ_dir の倍数
+  alphas: [0.05, 0.01, 0.001]
+  main_alpha: 0.01
+  block_size: 2500
+  patterns: [B1, B2, B3, B4, B5, B6, B7, B8, B9, B10]
+  b10_permutations: [rot180, mirror_x, mirror_y, shuffle]
+  ap_bootstrap: 200
+
+phase2:
+  series_length: 300
+  onset: 101
+  amplitudes: [0.25, 0.5, 1.0, 2.0, 3.0]
+  patterns: [A1, A2, A3, A4]
+  components: [low, high, radial, tangential, asymmetric, local]
+  temporal_params: {ramp_length: 100, drift_time_constant: 50, period: 50}
+  target_arl0: 370
+  n_top_bases: 4                         # Phase 1 の上位から選ぶ土台の手法の数（M3S は別に必ず入れる）
+  reference_families: [M2]               # 上位でなくても参照用に入れる系統（解釈しやすい係数 SPC）
+  rho_values: [0.7]
+  n_train: 3000
+  pilot:                                 # λ・k の選定（独立な乱数系列）
+    n_series: 200
+    arl_calibration_runs: 400
+    arl_calibration_length: 3000
+  main:
+    n_series: 1000
+    arl_calibration_runs: 1000
+    arl_calibration_length: 3000
+    arl_validation_runs: 1000
+    arl_validation_length: 3000
+  rho_sweep:                             # 時系列相関の影響（M3S と上位の検出器）
+    rho_values: [0.0, 0.3, 0.7, 0.95]
+    patterns: [A1, A2]
+    components: [low, local]
+    n_series: 500
+    arl_calibration_runs: 600
+    arl_calibration_length: 3000
+    arl_validation_runs: 400
+    arl_validation_length: 3000
+    prewhiten: true                      # AR(1) 残差（特殊原因管理図）版の EWMA・CUSUM も比べる
+  block_size: 1000
+
+phase3:
+  n_top_configs: 3                       # Phase 1・2 の上位（M3S は別に必ず入れる）
+  n_train: 3000
+  n_calibration: 20000
+  n_evaluation: 20000
+  n_replicates: 1000
+  alpha: 0.01
+  amplitudes: [1, 2, 4, 8, 16]
+  base: {density: 1.0, layout: realistic, noise_scale: 1.0, order: 5}
+  factors:
+    density: [1.0, 0.5, 0.25]
+    layout: [realistic, uniform, d_optimal, i_optimal]
+    noise_scale: [0.5, 1.0, 2.0, 3.0]
+    order: [3, 4, 5]
+  layout_density: 0.25                   # 配置の比較は同じ点数（全点の 25%）で行う
+  interaction_top_factors: 2
+  temporal:                              # 経時変化検知のロバスト性（縮小版）
+    patterns: [A1, A2]
+    components: [low, local]
+    amplitudes: [0.5, 1.0, 2.0]
+    n_series: 300
+    arl_calibration_runs: 500
+    arl_calibration_length: 3000
+  block_size: 2500
+
+apc:
+  n_train: 3000
+  n_calibration: 20000
+  n_evaluation: 20000
+  n_replicates: 1000
+  alpha: 0.01
+  amplitudes: [1, 2, 4, 8, 16]
+  alignment_map: {layout: realistic, density: 0.25}   # 補正に使う Alignment 計測（約20 Shot × 4 Mark）
+  overlay_map: {layout: uniform, density: 0.5}        # 性能評価に使う独立な Overlay 検証点（overlay マーク）
+  correction_orders: [1, 3, 5]                        # APC 補正モデルの次数（1 = 線形の6パラメータ）
+  alignment_noise_scales: [1.0, 3.0]                  # ノイズ過学習の条件で大きくする
+  sparse_alignment_density: 0.125                     # ノイズ過学習の条件（約10 Shot）
+  monitoring_order: 5
+  temporal:
+    patterns: [A2]
+    components: [low, radial, local]
+    amplitudes: [0.5, 1.0, 2.0]
+    n_series: 300
+    arl_calibration_runs: 500
+    arl_calibration_length: 3000
+    lam: 0.1
+  block_size: 2500
