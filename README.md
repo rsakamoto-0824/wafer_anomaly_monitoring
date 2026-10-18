@@ -11,7 +11,7 @@
 数値はすべて乱数で作った模擬データによります。実データ・社内データは使っていません。
 
 **実データで同じ比較をするアプリ**（Mac・Windows）：Excel・CSV の計測テーブルを読み込み、画面で設定を選ぶと、
-同じ誤報率にそろえた判定・異常の注入試験・経時変化の監視の結果を表示・保存します。使い方は [realdata_validator/README.md](realdata_validator/README.md)。
+同じ誤報率にそろえた判定・異常の注入試験・経時変化の監視の結果を表示・保存します。使い方は [realdata_validator/README.md](realdata_validator/README.md)、画面の画像つきの利用手順書は [realdata_validator/docs/user_guide/user_guide.html](realdata_validator/docs/user_guide/user_guide.html)。
 
 ## 結果の要点（誤報率をそろえた比較。数値の出典は `results/metrics/report_values.csv`）
 

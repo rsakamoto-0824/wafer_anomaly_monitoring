@@ -20,10 +20,13 @@ from ..export import (
     judgement_table,
 )
 from ..findings import key_findings
+from ..injection import NO_ANOMALY, PATTERN_LABELS
 from ..settings import method_label
 from .widgets import PAD, SMALL_PAD, DataFrameTable, FigurePanel, format_cell, set_text, text_box
 
 AXIS_CHOICES = {"自動": None, "線形": False, "対数": True}
+ALL_PATTERNS = "すべてのパターン（小さな図を並べる）"
+DRIFT_CHART_LIMIT = 10  # 画面の図に出す検出器の数（ノート PC の画面でも名前が重ならないように。保存する図はすべて）
 VIEW_HINT = "表の行をダブルクリック（または Enter）すると、その計測の Wafer マップを表示します。"
 
 
@@ -47,11 +50,11 @@ class ResultsTab(ttk.Frame):
             ("chart", "管理図"),
             ("overview", "警報の一覧"),
             ("table", "判定一覧"),
-            ("map", "Wafer マップ"),
-            ("temporal", "経時変化の管理限界"),
-            ("label", "ラベルとの照合"),
-            ("single", "注入試験（1 Wafer）"),
-            ("drift", "注入試験（経時変化）"),
+            ("map", "マップ"),
+            ("temporal", "経時の限界"),
+            ("label", "ラベル照合"),
+            ("single", "注入 1 Wafer"),
+            ("drift", "注入 経時変化"),
         ):
             page = ttk.Frame(self.notebook, padding=PAD)
             self.notebook.add(page, text=text)
@@ -73,7 +76,7 @@ class ResultsTab(ttk.Frame):
         panes = ttk.Panedwindow(page, orient="vertical")
         panes.pack(fill="both", expand=True)
         top = ttk.Frame(panes)
-        self.summary_text = text_box(top, height=9)
+        self.summary_text = text_box(top, height=11)
         scrollbar = ttk.Scrollbar(top, orient="vertical", command=self.summary_text.yview)
         self.summary_text.configure(yscrollcommand=scrollbar.set)
         scrollbar.pack(side="right", fill="y")
@@ -81,7 +84,7 @@ class ResultsTab(ttk.Frame):
         panes.add(top, weight=1)
         bottom = ttk.Frame(panes)
         ttk.Label(bottom, text="手法ごとの管理限界と警報の数（1 Wafer）", style="Section.TLabel").pack(anchor="w", pady=(PAD, SMALL_PAD))
-        self.method_table = DataFrameTable(bottom, height=9)
+        self.method_table = DataFrameTable(bottom, height=6)
         self.method_table.pack(fill="both", expand=True)
         panes.add(bottom, weight=1)
 
@@ -161,14 +164,29 @@ class ResultsTab(ttk.Frame):
         setattr(self, f"{key}_table", table)
 
     def _build_injection(self, key: str, note: str):
+        """図と表を別のタブにする（ノート PC の画面でも、図を画面いっぱいに出せるように）。"""
         page = self.pages[key]
         ttk.Label(page, text=note, style="Note.TLabel", wraplength=1100, justify="left").pack(anchor="w")
-        panes = ttk.Panedwindow(page, orient="vertical")
-        panes.pack(fill="both", expand=True, pady=SMALL_PAD)
-        table = DataFrameTable(panes, height=8)
-        panes.add(table, weight=2)
-        panel = FigurePanel(panes, size=(10, 7.5))
-        panes.add(panel, weight=3)
+        inner = ttk.Notebook(page)
+        inner.pack(fill="both", expand=True, pady=(SMALL_PAD, 0))
+        figure_page = ttk.Frame(inner, padding=SMALL_PAD)
+        table_page = ttk.Frame(inner, padding=SMALL_PAD)
+        inner.add(figure_page, text="図")
+        inner.add(table_page, text="表（手法ごとのまとめ）")
+        table = DataFrameTable(table_page, height=12)
+        table.pack(fill="both", expand=True)
+        ttk.Label(table_page, text="条件ごとのくわしい表は、「結果を保存…」で保存した Excel にあります。", style="Note.TLabel").pack(anchor="w")
+        if key == "single":
+            controls = ttk.Frame(figure_page)
+            controls.pack(fill="x")
+            ttk.Label(controls, text="図にするパターン").pack(side="left")
+            self.pattern_var = tk.StringVar()
+            self.pattern_box = ttk.Combobox(controls, textvariable=self.pattern_var, state="readonly", width=46)
+            self.pattern_box.pack(side="left", padx=PAD)
+            self.pattern_box.bind("<<ComboboxSelected>>", lambda _e: self.draw_single())
+            self._patterns: dict[str, str | None] = {}
+        panel = FigurePanel(figure_page, size=(10, 5))
+        panel.pack(fill="both", expand=True)
         setattr(self, f"{key}_table", table)
         setattr(self, f"{key}_panel", panel)
 
@@ -205,11 +223,15 @@ class ResultsTab(ttk.Frame):
             single = single.assign(method_label=single["method"].map(method_label))
         self._show_optional("single", single, INJECTION_SINGLE_SUMMARY_COLUMNS)
         if result.injection_single is not None:
-            plots.injection_single_chart(self.single_panel.figure, result.injection_single)
-            self.single_panel.draw()
+            patterns = [p for p in dict.fromkeys(result.injection_single["pattern"]) if p != NO_ANOMALY]
+            self._patterns = {f"{p} {PATTERN_LABELS.get(p, '')}": p for p in patterns}
+            self._patterns[ALL_PATTERNS] = None
+            self.pattern_box.configure(values=list(self._patterns))
+            self.pattern_var.set(next(iter(self._patterns)))
+            self.draw_single()
         self._show_optional("drift", result.injection_temporal_summary, INJECTION_TEMPORAL_SUMMARY_COLUMNS)
         if result.injection_temporal_summary is not None:
-            plots.injection_temporal_chart(self.drift_panel.figure, result.injection_temporal_summary)
+            plots.injection_temporal_chart(self.drift_panel.figure, result.injection_temporal_summary, DRIFT_CHART_LIMIT)
             self.drift_panel.draw()
         self.notebook.select(self.pages["summary"])
         self.set_busy(False)
@@ -234,6 +256,13 @@ class ResultsTab(ttk.Frame):
         set_text(self.summary_text, "\n".join(lines))
         present = [column for column in METHOD_COLUMNS if column in result.method_table.columns]
         self.method_table.show(result.method_table[present].rename(columns=METHOD_COLUMNS))
+
+    def draw_single(self) -> None:
+        if self.result is None or self.result.injection_single is None:
+            return
+        pattern = self._patterns.get(self.pattern_var.get())
+        plots.injection_single_chart(self.single_panel.figure, self.result.injection_single, pattern=pattern)
+        self.single_panel.draw()
 
     def draw_chart(self) -> None:
         if self.result is None or not self.chart_var.get():
