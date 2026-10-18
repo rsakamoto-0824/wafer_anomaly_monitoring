@@ -41,6 +41,7 @@ GPR_TIPS = {
     "matern52_full": "Matérn 5/2 カーネル。RBF より少し粗い変動を許す",
     "matern52_residual": "Matérn 5/2 カーネルの残差",
 }
+PATTERN_SHORT_LABELS = {"B10": "平均・σ が同じ形状異常（入れ替え）"}  # 長い名前は画面の右で切れるので短くする（説明は吹き出し）
 NOT_READY_TEXT = "「1. データ」で「データを確認する」を押すと実行できます。"
 PATTERN_TIPS = {pattern: PATTERN_DESCRIPTIONS.get(pattern, "") for pattern in SINGLE_PATTERNS}
 
@@ -99,7 +100,8 @@ class SettingsTab(ttk.Frame):
             )
         ):
             frame = ttk.Frame(modes)
-            frame.grid(row=0, column=column, sticky="w", padx=(0, 3 * PAD))
+            # 日時の欄は長いので次の行に置く（狭い画面でも右が切れないように）
+            frame.grid(row=column // 2, column=column % 2, sticky="w", padx=(0, 3 * PAD), pady=(0, SMALL_PAD))
             ttk.Radiobutton(frame, text=text, value=value, variable=self.normal_mode_var, command=self.update_preview).pack(side="left")
             entry = ttk.Entry(frame, textvariable=variable, width=width)
             entry.pack(side="left", padx=SMALL_PAD)
@@ -190,7 +192,8 @@ class SettingsTab(ttk.Frame):
         box.grid(row=row, column=0, sticky="ew", pady=SMALL_PAD)
         self.single_var = tk.BooleanVar()
         ttk.Checkbutton(box, text="1 Wafer の注入試験を行う（検証の Phase 1）", variable=self.single_var).grid(row=0, column=0, columnspan=3, sticky="w")
-        self.pattern_group = CheckGroup(box, [(p, f"{p} {PATTERN_LABELS[p]}") for p in SINGLE_PATTERNS], columns=3, tooltips=PATTERN_TIPS)
+        self.pattern_group = CheckGroup(box, [(p, f"{p} {PATTERN_SHORT_LABELS.get(p, PATTERN_LABELS[p])}") for p in SINGLE_PATTERNS],
+                                        columns=3, tooltips=PATTERN_TIPS)
         labeled_row(box, 1, "異常の形", self.pattern_group)
         self.single_amp_group = CheckGroup(box, [(a, f"{a:g}σ") for a in SINGLE_AMPLITUDES], columns=5)
         labeled_row(box, 2, "大きさ（σ_dir の倍数）", self.single_amp_group, "σ_dir：異常の形の向きでの、正常 Wafer のばらつき（標準偏差）。")

@@ -43,8 +43,9 @@ from .widgets import (
 )
 
 POLL_MS = 100
-WINDOW_SIZE = "1360x900"
+WINDOW_SIZE = (1360, 900)  # 画面が大きいときの大きさ。小さい画面では画面に収まるように縮める
 MIN_WINDOW = (1000, 680)
+SCREEN_MARGIN = (40, 150)  # 画面の端・メニューバー・タイトルバー・Dock／タスクバーの分
 SELF_TEST_LOTS = 12
 SELF_TEST_EXCEL_LOTS = 4
 SMOKE_TEST_TIMEOUT_S = 900
@@ -110,12 +111,12 @@ class App:
         self.task_listeners = []
         use_light_appearance(root)
         root.title(f"{APP_NAME}（{APP_VERSION}）")
-        root.geometry(WINDOW_SIZE)
-        root.minsize(*MIN_WINDOW)
+        fit_to_screen(root)
         self.font_size = tk.StringVar(value=DEFAULT_FONT_SIZE)
         apply_font_size(root, DEFAULT_FONT_SIZE)
         plots.configure_fonts()
         self._build_menu()
+        self._build_status_bar()  # 先に下へ置く（後にすると、画面が小さいとき大きなタブに押し出されて見えなくなる）
         self.notebook = ttk.Notebook(root)
         self.notebook.pack(fill="both", expand=True, padx=PAD, pady=(PAD, 0))
         self.data_tab = DataTab(self.notebook, self)
@@ -126,7 +127,6 @@ class App:
         self.notebook.add(self.results_tab, text="3. 結果")
         self.notebook.tab(TAB_SETTINGS, state="disabled")
         self.notebook.tab(TAB_RESULTS, state="disabled")
-        self._build_status_bar()
         root.protocol("WM_DELETE_WINDOW", self.quit)
         root.bind("<Escape>", lambda _e: self.cancel_task())
 
@@ -401,6 +401,17 @@ class SampleDialog:
         self.app.set_status(f"練習用データを作りました：{paths[0]}")
         if messagebox.askyesno("作りました", f"練習用データを作りました。\n{paths[0]}\n（入れた異常の一覧：{paths[1].name}）\n\n今すぐ読み込みますか？", parent=self.app.root):
             self.app.data_tab.load_path(str(paths[0]))
+
+
+def fit_to_screen(root: tk.Tk) -> None:
+    """窓を画面に収まる大きさにして、画面の中ほどに置く（ノート PC の画面や Windows の表示倍率 150% でも下が切れないように）。"""
+    screen_width, screen_height = root.winfo_screenwidth(), root.winfo_screenheight()
+    width = max(400, min(WINDOW_SIZE[0], screen_width - SCREEN_MARGIN[0]))
+    height = max(300, min(WINDOW_SIZE[1], screen_height - SCREEN_MARGIN[1]))
+    left = max(0, (screen_width - width) // 2)
+    top = max(0, (screen_height - height) // 3)
+    root.geometry(f"{width}x{height}+{left}+{top}")
+    root.minsize(min(MIN_WINDOW[0], width), min(MIN_WINDOW[1], height))
 
 
 def open_folder(folder: Path) -> None:

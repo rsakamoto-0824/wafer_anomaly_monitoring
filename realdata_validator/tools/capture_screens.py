@@ -13,7 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from src.realdata.gui.app import App, SmokeTest, quick_settings  # noqa: E402
+from src.realdata.gui.app import App, SampleDialog, SmokeTest, quick_settings  # noqa: E402
 
 RESULT_PAGES = ("summary", "chart", "overview", "table", "map", "temporal", "label", "single", "drift")
 
@@ -23,18 +23,37 @@ class Capture(SmokeTest):
 
     def __init__(self, app: App, output: Path):
         super().__init__(app, output)
-        self.steps = [self.load, self.shot_step("01_data_top"), self.check, self.scroll_shot(self.app.data_tab, 0.55, "02_data_bottom"),
+        self.steps = [self.shot_sample_dialog, self.load, self.choose_label, self.shot_step("01_data_top"), self.check,
+                      self.scroll_shot(self.app.data_tab, 0.24, "02_data_mapping"), self.scroll_shot(self.app.data_tab, 0.6, "02_data_options"),
+                      self.scroll_shot(self.app.data_tab, 1.0, "02_data_bottom"),
                       self.go_settings, self.run]
         self.steps += [self.result_step(key) for key in RESULT_PAGES] + [self.finish]
 
-    def shot(self, name: str) -> None:
-        root = self.app.root
-        root.attributes("-topmost", True)
-        root.lift()
-        root.update_idletasks()
-        root.update()
-        x, y, w, h = root.winfo_rootx(), root.winfo_rooty(), root.winfo_width(), root.winfo_height()
+    def shot(self, name: str, window=None) -> None:
+        window = window or self.app.root
+        window.attributes("-topmost", True)
+        window.lift()
+        window.update_idletasks()
+        window.update()
+        x, y, w, h = window.winfo_rootx(), window.winfo_rooty(), window.winfo_width(), window.winfo_height()
         subprocess.run(["screencapture", "-x", "-R", f"{x},{y},{w},{h}", str(self.output / f"{name}.png")], check=False)
+
+    def choose_label(self):
+        """練習用データの列「既知の異常」をラベルにする（ラベルとの照合の画面も撮るため）。"""
+        from src.realdata.sample_data import LABEL_COLUMN
+
+        tab = self.app.data_tab
+        tab.label_column_var.set(LABEL_COLUMN)
+        tab._label_column_changed()
+        return False
+
+    def shot_sample_dialog(self):
+        dialog = SampleDialog(self.app)
+        dialog.folder_var.set("（保存先のフォルダ）")
+        self.app.root.update()
+        self.shot("00_sample_dialog", dialog.window)
+        dialog.window.destroy()
+        return False
 
     def shot_step(self, name: str):
         def step():
@@ -63,7 +82,7 @@ class Capture(SmokeTest):
 
     def run(self):
         settings = quick_settings(self.app.table)
-        settings.data = self.app.data_tab.collect_options()
+        settings.data = self.app.settings.data
         settings.methods.alpha_percent = 1.0
         settings.temporal.target_arl0 = 370
         settings.temporal.n_bootstrap_series = 200
@@ -73,6 +92,7 @@ class Capture(SmokeTest):
         settings.injection.temporal_amplitudes = [0.5, 1.0, 2.0]
         self.app.settings_tab.apply_settings(settings)
         self.app.settings_tab.run()
+        self.app.root.after(2500, lambda: self.shot("07_running"))
         return True
 
     def result_step(self, key: str):

@@ -1,0 +1,763 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Wafer 面内傾向の異常検知 実データ検証アプリ（Windows・Mac）の利用手順書。入手と起動、データの読み込み、設定、実行、結果の見方と保存、困ったとき。">
+  <title>実データ検証アプリ 利用手順書</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="procedure-guide.css">
+  <style>
+    /* 画面の画像と小見出し（テンプレートに無い部品だけを足す） */
+    .screen-figure {
+      margin: 14px 0 6px;
+    }
+
+    .screen-figure img {
+      display: block;
+      width: 100%;
+      max-width: 1000px;
+      height: auto;
+      border: 1px solid var(--color-slate-200);
+      border-radius: var(--radius-medium-px);
+    }
+
+    .screen-figure figcaption {
+      margin-top: 6px;
+      color: var(--color-slate-600);
+      font-size: 0.8rem;
+    }
+
+    .sub-heading {
+      margin-top: 30px;
+      padding-left: 10px;
+      border-left: 3px solid var(--color-blue-500);
+    }
+
+    /* 長いパスや URL は幅で折り返す（横にはみ出さない） */
+    td code,
+    li code,
+    p code {
+      overflow-wrap: anywhere;
+    }
+
+    .ui {
+      font-weight: 700;
+    }
+  </style>
+  <script src="procedure-guide.js" defer></script>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main-content">本文へ移動</a>
+
+  <button
+    id="toc-toggle"
+    class="toc-toggle"
+    type="button"
+    aria-controls="sidebar"
+    aria-expanded="false"
+  >
+    <span aria-hidden="true">☰</span> 目次
+  </button>
+
+  <aside id="sidebar" class="sidebar" aria-label="目次">
+    <div class="sidebar-header">
+      <p class="eyebrow">Internal Procedure</p>
+      <p class="sidebar-title">実データ検証アプリ</p>
+      <p class="sidebar-subtitle">利用手順書（Windows・Mac）</p>
+    </div>
+    <nav>
+      <ol class="toc-list">
+        <li><a href="#overview">1. 目的と対象</a></li>
+        <li><a href="#prerequisites">2. 作業前の確認</a></li>
+        <li><a href="#workflow">3. 全体の流れ</a></li>
+        <li><a href="#start">4. 入手と起動</a></li>
+        <li><a href="#practice">5. 練習用データで試す</a></li>
+        <li><a href="#data">6. データを読み込む</a></li>
+        <li><a href="#settings">7. 設定を決める</a></li>
+        <li><a href="#run">8. 検証を実行する</a></li>
+        <li><a href="#results">9. 結果を見る</a></li>
+        <li><a href="#save">10. 結果を保存する</a></li>
+        <li><a href="#reading">11. 結果を読むときの注意</a></li>
+        <li><a href="#verification">12. 完了確認</a></li>
+        <li><a href="#troubleshooting">13. 困ったとき</a></li>
+      </ol>
+    </nav>
+    <div class="sidebar-footer">
+      <span class="status-dot" aria-hidden="true"></span>
+      社内利用
+    </div>
+  </aside>
+  <div id="sidebar-overlay" class="sidebar-overlay" aria-hidden="true"></div>
+
+  <main id="main-content" class="main-content">
+    <header class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">Operating Guide · Internal Use</p>
+        <h1>Wafer 面内傾向の異常検知<br><span>実データ検証アプリ 利用手順書</span></h1>
+        <p class="hero-lead">
+          Alignment・Overlay の計測データ（Excel・CSV）を読み込み、画面で設定を選んで、異常検知の手法を同じ誤報率にそろえて比べるアプリの使い方です。
+          入手と起動から、結果の見方と保存までを順に説明します。
+        </p>
+        <div class="hero-badges" aria-label="文書情報">
+          <span>対象: 計測データを扱う担当者</span>
+          <span>対応: Windows 11・macOS</span>
+          <span>所要時間: 初回 約 30 分</span>
+          <span>更新日: 2026/10/18</span>
+        </div>
+      </div>
+    </header>
+
+    <section id="overview" class="content-section">
+      <div class="section-heading">
+        <span class="section-number">01</span>
+        <div>
+          <p class="section-kicker">Overview</p>
+          <h2>目的と対象</h2>
+        </div>
+      </div>
+      <p>
+        このアプリは、模擬データで行った検証（技術レポート「Wafer 面内傾向の異常検知手法の比較」）を、実データで行うためのものです。
+        M3S・多項式係数 SPC・Mahalanobis 距離・PCA T²／SPE・GPR 残差・EWMA・CUSUM・OR 統合を、<strong>同じ誤報率にそろえて</strong>比べます。
+        計算の中身は検証と同じプログラムです。
+      </p>
+
+      <div class="card-grid three-columns">
+        <article class="feature-card">
+          <span class="card-label">Check A</span>
+          <h3>実データの判定</h3>
+          <p>正常期間で決めた管理限界を、それより後の計測に当てます。どの手法がどの計測で警報を出したか、M3S では警報が出ずにほかの手法で警報が出た計測はどれかを一覧にします。</p>
+        </article>
+        <article class="feature-card">
+          <span class="card-label">Check B</span>
+          <h3>既知の異常との照合（任意）</h3>
+          <p>異常と分かっている Wafer の印（ラベル）の列があれば、手法ごとに何件見つけたか、見分ける力（ROC-AUC）を出します。</p>
+        </article>
+        <article class="feature-card">
+          <span class="card-label">Check C</span>
+          <h3>異常の注入試験</h3>
+          <p>正常な Wafer に、検証と同じ形の異常（Radial・局所・単一 Shot など）を足して、検出率と、気づくまでの枚数を比べます。</p>
+        </article>
+      </div>
+      <p class="note">データはこのパソコンの中だけで処理し、インターネットには送りません。</p>
+    </section>
+
+    <section id="prerequisites" class="content-section">
+      <div class="section-heading">
+        <span class="section-number">02</span>
+        <div>
+          <p class="section-kicker">Prerequisites</p>
+          <h2>作業前の確認</h2>
+        </div>
+      </div>
+      <ul class="check-list">
+        <li>使う PC は Windows 11 か macOS です。メモリは 8 GB 以上をおすすめします。</li>
+        <li>起動のしかたを決めます。Python がない PC は「実行ファイル版」、Python 3.14 がある PC は「Python 版」です（<a href="#start">4. 入手と起動</a>）。</li>
+        <li>計測データを用意します。1 行が 1 つの Mark の計測で、<code>Wafer</code>・<code>Xmm</code>・<code>Ymm</code>・<code>markXmm</code>・<code>markYmm</code>・<code>measX</code>・<code>measY</code> の列がある Excel（.xlsx・.xlsm）か CSV です（<a href="#data-format">6-1. 読み込めるデータの形</a>）。</li>
+        <li>正常期間（工程に問題がなかったと分かっている期間）を決めておきます。</li>
+        <li>結果を保存するフォルダ（社内のデータを置いてよい場所）を決めておきます。</li>
+      </ul>
+
+      <div class="callout warning">
+        <div class="callout-icon" aria-hidden="true">!</div>
+        <div>
+          <h3>社内データの扱い</h3>
+          <p>
+            読み込むデータと保存した結果には、社内の計測値が含まれます。社外のサービス（クラウドの AI、個人のメール、ファイル共有サービスなど）に送らないでください。
+            アプリのリポジトリ（GitHub で公開しています）のフォルダにも保存しないでください。
+            実行ファイル版は署名のないアプリです。会社の PC で使う前に、情報システムの担当に実行してよいか確認してください。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="workflow" class="content-section">
+      <div class="section-heading">
+        <span class="section-number">03</span>
+        <div>
+          <p class="section-kicker">Workflow</p>
+          <h2>全体の流れ</h2>
+        </div>
+      </div>
+      <div class="workflow">
+        <div class="workflow-step"><span>1</span><strong>入手・起動</strong><small>実行ファイル版か Python 版</small></div>
+        <div class="workflow-arrow" aria-hidden="true">→</div>
+        <div class="workflow-step"><span>2</span><strong>データ</strong><small>読み込みと確認</small></div>
+        <div class="workflow-arrow" aria-hidden="true">→</div>
+        <div class="workflow-step"><span>3</span><strong>設定</strong><small>正常期間・手法・誤報率</small></div>
+        <div class="workflow-arrow" aria-hidden="true">→</div>
+        <div class="workflow-step"><span>4</span><strong>実行</strong><small>検証を実行</small></div>
+        <div class="workflow-arrow" aria-hidden="true">→</div>
+        <div class="workflow-step"><span>5</span><strong>結果</strong><small>見て、保存する</small></div>
+      </div>
+      <p>
+        画面上の「1. データ」「2. 設定」「3. 結果」のタブを左から順に進めます。前のタブが終わるまで、次のタブは押せません。
+        初めてのときは、<a href="#practice">練習用の模擬データ</a>で一度通して試すと流れが分かります（5 分ほど）。
+      </p>
+      <p class="note">
+        この手順書の画像は、Mac で練習用の模擬データを読み込んで撮影したものです。Windows では窓の枠や文字の形が少し違いますが、配置は同じです。
+        メニュー（ファイル・表示・ヘルプ）は、Mac では画面のいちばん上、Windows では窓の上にあります。
+      </p>
+    </section>
+
+    <section id="start" class="content-section">
+      <div class="section-heading">
+        <span class="section-number">04</span>
+        <div>
+          <p class="section-kicker">Install &amp; Start</p>
+          <h2>入手と起動</h2>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>起動のしかた</th><th>Windows</th><th>Mac</th><th>必要なもの</th></tr></thead>
+          <tbody>
+            <tr><td>実行ファイル版</td><td><code>WaferMonitorValidator.exe</code></td><td><code>WaferMonitorValidator.app</code></td><td>なし（Python は不要）</td></tr>
+            <tr><td>Python 版</td><td><code>start_windows.bat</code></td><td><code>start_mac.command</code></td><td>Python 3.14。初回だけインターネット</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub-heading">4-1. 実行ファイル版を入手する</h3>
+      <ol class="numbered-steps">
+        <li><div><strong>GitHub の「Actions」を開く</strong><p>
+          リポジトリ <code>https://github.com/rsakamoto-0824/wafer_anomaly_monitoring</code> の上の［Actions］を押し、左の一覧で［実データ検証アプリ（Windows・Mac）］を選びます。
+          緑のチェックが付いた、いちばん上（新しい）の実行を開きます。
+        </p></div></li>
+        <li><div><strong>「Artifacts」からダウンロードする</strong><p>
+          画面の下の［Artifacts］で、Windows は <code>WaferMonitorValidator-Windows</code>、Mac は <code>WaferMonitorValidator-Mac</code> を押します（GitHub へのログインが必要です）。
+          保存期間は 14 日です。期限が切れていたら、同じ画面の［Run workflow］で作り直すか、<a href="#build">4-4</a> の方法で自分で作ります。
+          Mac 用は Apple シリコン（M1 以降）の Mac 用です。
+        </p></div></li>
+        <li><div><strong>展開して置く</strong><p>
+          Windows：ZIP を右クリック →［すべて展開］。できたフォルダ（中に <code>WaferMonitorValidator.exe</code> と <code>_internal</code> フォルダがある）を、<strong>フォルダごと</strong> <code>C:\work</code> などに置きます。exe だけを取り出すと動きません。<br>
+          Mac：ダウンロードした ZIP を開くと、中にもう 1 つ <code>WaferMonitorValidator-Mac.zip</code> があります。それも開くと <code>WaferMonitorValidator.app</code> ができるので、「アプリケーション」などに置きます。
+        </p></div></li>
+        <li><div><strong>起動する</strong><p>
+          <code>WaferMonitorValidator.exe</code>（Mac は <code>WaferMonitorValidator.app</code>）をダブルクリックします。
+          初めての起動は、図の文字の準備に 10〜30 秒かかります。2 回目からは早くなります。
+        </p></div></li>
+      </ol>
+
+      <h3 class="sub-heading">4-2. 初めて開くときの確認（署名のないアプリ）</h3>
+      <ul>
+        <li><strong>Windows</strong>：「Windows によって PC が保護されました」と出たら、［詳細情報］→［実行］を押します。会社の PC では、許可されているかを確かめてからにしてください。</li>
+        <li><strong>Mac</strong>：「開発元を検証できないため開けません」と出たら、アプリを右クリック（control＋クリック）→［開く］→［開く］を押します。
+          それでも開けないときは、［システム設定］→［プライバシーとセキュリティ］の下のほうにある［このまま開く］を押します。</li>
+      </ul>
+
+      <h3 class="sub-heading">4-3. Python 版で起動する</h3>
+      <ol class="numbered-steps">
+        <li><div><strong>Python 3.14 を入れる</strong><p>
+          <code>https://www.python.org/downloads/</code> から Python 3.14 を入れます。Windows では、インストールの最初の画面で「Add python.exe to PATH」にチェックを入れます。
+        </p></div></li>
+        <li><div><strong>リポジトリのフォルダを用意する</strong><p>GitHub の［Code］→［Download ZIP］で取得して展開するか、<code>git clone</code> します。</p></div></li>
+        <li><div><strong>起動用のファイルをダブルクリックする</strong><p>
+          <code>realdata_validator</code> フォルダの <code>start_windows.bat</code>（Mac は <code>start_mac.command</code>）をダブルクリックします。
+          初回だけ、このフォルダに専用の Python 環境（<code>.venv</code>）を作ってライブラリを入れます（数分。インターネットが必要）。2 回目からはすぐに起動します。
+        </p></div></li>
+      </ol>
+      <p>コマンドで起動する場合（リポジトリのフォルダで実行）：</p>
+      <div class="code-block" data-language="Windows（PowerShell）">
+        <button class="copy-button" type="button">コピー</button>
+        <pre><code>realdata_validator\.venv\Scripts\python.exe realdata_validator\run_app.py</code></pre>
+      </div>
+      <div class="code-block" data-language="Mac（ターミナル）">
+        <button class="copy-button" type="button">コピー</button>
+        <pre><code>realdata_validator/.venv/bin/python realdata_validator/run_app.py</code></pre>
+      </div>
+
+      <h3 class="sub-heading" id="build">4-4. 実行ファイルを自分で作る（任意）</h3>
+      <p>
+        Python 3.14 を入れた PC で、<code>realdata_validator</code> フォルダの <code>build_windows.bat</code>（Mac は <code>build_mac.command</code>）をダブルクリックします。
+        テスト → 実行ファイルの作成 → できた実行ファイルでの自己診断を順に行い、Windows は <code>dist\WaferMonitorValidator\</code>、Mac は <code>dist/WaferMonitorValidator.app</code> ができます（初回は 10 分ほど）。
+      </p>
+      <p class="note">実行ファイルは、作った OS 用のものしか作れません。Windows 用は Windows で、Mac 用は Mac で作ります。</p>
+    </section>
+
+    <section id="practice" class="content-section">
+      <div class="section-heading">
+        <span class="section-number">05</span>
+        <div>
+          <p class="section-kicker">Practice</p>
+          <h2>練習用データで試す</h2>
+        </div>
+      </div>
+      <ol class="numbered-steps">
+        <li><div><strong>メニューの［ヘルプ］→［練習用の模擬データを作る…］を選ぶ</strong><p>小さな画面が開きます。</p></div></li>
+        <li><div><strong>形式・Lot の数・保存先を選んで［作る］を押す</strong><p>
+          形式は CSV（速い）がおすすめです。Lot の数の既定は 24（600 枚）です。Excel は大きいと作るのに時間がかかります。
+        </p>
+          <figure class="screen-figure">
+            <img src="images/00_sample_dialog.jpg" width="1400" height="484" alt="練習用の模擬データを作る画面。形式、Lot の数、保存先のフォルダ、作るとキャンセルのボタン" loading="lazy">
+            <figcaption>図 1　練習用の模擬データを作る</figcaption>
+          </figure>
+        </div></li>
+        <li><div><strong>「今すぐ読み込みますか？」で［はい］を押す</strong><p>そのまま「1. データ」の画面に読み込まれます。続きは <a href="#data">6. データを読み込む</a> と同じです。</p></div></li>
+      </ol>
+
+      <div class="callout tip">
+        <div class="callout-icon" aria-hidden="true">✓</div>
+        <div>
+          <h3>練習用データの中身</h3>
+          <p>
+            検証と同じ作り方の模擬データです（実データではありません）。後半に 1 Wafer の異常 4 枚（局所変形・単一 Shot・高次・Radial。列「既知の異常」が 1）と、
+            最後の約 2 割にゆっくり増える局所変形が入っています。入れた異常の一覧（<code>…_入れた異常.csv</code>）も同じフォルダにできるので、結果と照らし合わせられます。
+            未測定（Sts = −1、計測値は 0）や重複行も少し入っているので、前処理の確認にも使えます。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="data" class="content-section">
+      <div class="section-heading">
+        <span class="section-number">06</span>
+        <div>
+          <p class="section-kicker">Step 1 · Data</p>
+          <h2>データを読み込む</h2>
+        </div>
+      </div>
+      <ol class="numbered-steps">
+        <li><div><strong>［ファイルを選ぶ…］を押してファイルを選ぶ</strong><p>
+          Excel に複数のシートがあれば「シート（Excel のとき）」で選び直せます。読み込み中は窓の下に表示が出ます（Excel は進み具合の棒も出ます）。
+          「ファイルの中身（先頭 100 行）」で、思ったファイルかを確かめます。
+        </p>
+          <figure class="screen-figure">
+            <img src="images/01_data_file.jpg" width="1400" height="772" alt="「1. データ」の画面の上部。ファイルの欄、ファイルを選ぶボタン、シートの選択、ファイルの先頭の行の表" loading="lazy">
+            <figcaption>図 2　ファイルを選んだところ</figcaption>
+          </figure>
+        </div></li>
+        <li><div><strong>列の対応づけを確かめる</strong><p>
+          標準と同じ名前の列は自動で選ばれます。名前が違うときは、右のリストからファイルの列を選び直します。
+          「（必須）」の 7 項目は必ず選びます。ファイルにない項目は「（なし）」のままで構いません。
+        </p>
+          <figure class="screen-figure">
+            <img src="images/02_data_mapping.jpg" width="1400" height="772" alt="列の対応づけ。標準の項目名ごとに、ファイルの列を選ぶリストと意味・単位が並ぶ" loading="lazy">
+            <figcaption>図 3　列の対応づけ</figcaption>
+          </figure>
+        </div></li>
+        <li><div><strong>読み込みの設定を確かめる</strong><p>
+          計測値の単位（nm か µm）、有効半径（既定 150 mm。半径がこれより小さい点だけを使う）、Wafer の半径（300 mm Wafer は 150）、
+          座標の丸め幅、同じ Wafer の計測が複数あるときの扱い（すべて使う／最後の計測だけ使う）です。ふつうは既定のままで構いません。
+        </p></div></li>
+        <li><div><strong>必要なら、絞り込みとラベルを選ぶ</strong><p>
+          <span class="ui">絞り込み</span>：製品・工程・装置などが 1 つのファイルに混ざっているときに、列を選んで残す値を選びます。<br>
+          <span class="ui">既知の異常のラベル</span>：異常と分かっている Wafer の印の列（例 1／0、NG／OK）を選び、「異常」を表す値を選びます。1・NG・異常 などは自動で選ばれます。
+          ラベルで異常とされた計測は、正常のモデルの学習と管理限界の決定に使いません。
+        </p>
+          <figure class="screen-figure">
+            <img src="images/03_data_options.jpg" width="1400" height="772" alt="読み込みの設定と絞り込み。単位、有効半径、Wafer の半径、座標の丸め幅、再計測の扱い、絞り込む列と残す値" loading="lazy">
+            <figcaption>図 4　読み込みの設定と絞り込み</figcaption>
+          </figure>
+        </div></li>
+        <li><div><strong>［データを確認する］を押す</strong><p>
+          下の「データ確認の結果」に、使った行の数、未測定の数、重複行の数、Radius の確認、計測の件数、計測点の数、計測日時の範囲が出ます。
+          注意があれば最後に「注意：」で出ます。件数が思ったとおりなら［設定へ進む］を押します。
+        </p>
+          <figure class="screen-figure">
+            <img src="images/04_data_check.jpg" width="1400" height="772" alt="データ確認の結果。読み込んだ行、未測定の数、重複行、Radius の確認、計測の件数、計測点の数、計測日時" loading="lazy">
+            <figcaption>図 5　データ確認の結果</figcaption>
+          </figure>
+        </div></li>
+      </ol>
+      <p class="note">列の対応づけや読み込みの設定を変えたときは、もう一度［データを確認する］を押します（押すまで「2. 設定」に進めません）。</p>
+
+      <h3 class="sub-heading" id="data-format">6-1. 読み込めるデータの形</h3>
+      <p>1 行が 1 つの Mark の計測で、次の列がある表です（標準の項目名。大文字・小文字も同じにします）。</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>項目名</th><th>意味</th><th>単位・型</th><th>必須</th></tr></thead>
+          <tbody>
+            <tr><td><code>Wafer</code></td><td>Wafer の ID</td><td>文字列</td><td>必須</td></tr>
+            <tr><td><code>DateTime</code></td><td>計測日時（時間の順番に使う）</td><td>日時</td><td></td></tr>
+            <tr><td><code>shotNo</code></td><td>Shot 番号</td><td>整数</td><td></td></tr>
+            <tr><td><code>Direction</code></td><td>Scan 方向（1・2）。ないと Scan 方向の異常（B8）の注入試験はできない</td><td>コード</td><td></td></tr>
+            <tr><td><code>Xmm</code>・<code>Ymm</code></td><td>Shot 中心の座標（Wafer 中心が原点）</td><td>mm</td><td>必須</td></tr>
+            <tr><td><code>Radius</code></td><td>Shot 中心の半径（確認だけに使う）</td><td>mm</td><td></td></tr>
+            <tr><td><code>markNo</code></td><td>Shot 内の Mark 番号</td><td>整数</td><td></td></tr>
+            <tr><td><code>markXmm</code>・<code>markYmm</code></td><td>Shot 中心から見た Mark の座標</td><td>mm</td><td>必須</td></tr>
+            <tr><td><code>measX</code>・<code>measY</code></td><td>X・Y 方向の計測値</td><td>nm（µm も選べる）</td><td>必須</td></tr>
+            <tr><td><code>StsX</code>・<code>StsY</code></td><td>状態（0 = 有効、−1 = 未測定）</td><td>コード</td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">CSV は UTF-8 と Shift_JIS（日本語版 Excel の「CSV（コンマ区切り）」）のどちらでも読めます。古い Excel（.xls）は、Excel で .xlsx に保存し直してください。</p>
+
+      <h3 class="sub-heading">6-2. 前処理（［データを確認する］で行うこと）</h3>
+      <ul>
+        <li>X には <code>StsX = 0</code> の <code>measX</code>、Y には <code>StsY = 0</code> の <code>measY</code> だけを使います。未測定（−1）などは<strong>欠測</strong>にし、ゼロとしては扱いません。</li>
+        <li>解析の座標は <code>x = Xmm + markXmm</code>、<code>y = Ymm + markYmm</code> です。半径が有効半径より<strong>小さい</strong>点だけを使います（150 mm ちょうどの点は使いません）。</li>
+        <li><code>Wafer</code>・<code>DateTime</code>・座標が同じ行は重複とみなし、X・Y をそれぞれ平均します。</li>
+        <li><code>Radius</code> があれば、<code>Xmm</code>・<code>Ymm</code> から計算した値と合っているかを確かめます（解析には計算した値を使います）。</li>
+        <li>1 回の計測（Wafer × 日時）を 1 件とし、日時の順に並べます。同じ日時の中では Wafer ID の順（<code>-2</code> が <code>-10</code> より前）です。DateTime がなければファイルの行の順です。</li>
+      </ul>
+    </section>
+
+    <section id="settings" class="content-section">
+      <div class="section-heading">
+        <span class="section-number">07</span>
+        <div>
+          <p class="section-kicker">Step 2 · Settings</p>
+          <h2>設定を決める</h2>
+        </div>
+      </div>
+      <p>既定の値は、模擬データの検証と同じです。分からない項目はそのままで構いません。設定が終わったら、画面の右下の［検証を実行］を押します（<a href="#run">8. 検証を実行する</a>）。</p>
+
+      <h3 class="sub-heading">7-1. 正常期間と分割</h3>
+      <p>
+        正常期間（異常がないと考えられる期間）を、先頭からの割合・先頭からの件数・日時のどれかで決めます（既定は先頭から 50%）。
+        正常期間の前半（既定 50%）で正常のモデルを<strong>学習</strong>し、後半（<strong>校正</strong>）で管理限界を決め、正常期間より後を<strong>評価</strong>します。
+        欄の下の「見込み」に件数が出ます。校正の件数が少ないと、赤い字で注意が出ます。
+      </p>
+      <figure class="screen-figure">
+        <img src="images/05_settings_split.jpg" width="1400" height="772" alt="正常期間と分割の設定。先頭からの割合、件数、日時、学習に使う割合、件数の見込みと注意" loading="lazy">
+        <figcaption>図 6　正常期間と分割（赤い字は、校正の件数が少ないときの注意）</figcaption>
+      </figure>
+
+      <h3 class="sub-heading">7-2. 計測点の欠け</h3>
+      <p>
+        すべての手法で同じ点を使うため、正常期間の計測の 90% 以上で計測できた点を「共通の計測点」にします。
+        共通の計測点の 20% より多く欠けている計測は解析から除き、残りの欠けは正常のモデルで補います（補った値は M3S には使いません）。
+      </p>
+
+      <h3 class="sub-heading">7-3. 監視手法と誤報率</h3>
+      <p>
+        誤報率は「正常な Wafer で警報が出る割合」で、すべての手法をこの値にそろえます（既定 1%）。
+        校正の件数 × 誤報率が 5 件以上あると管理限界が安定します（1% なら校正 500 件、5% なら 100 件）。
+      </p>
+      <figure class="screen-figure">
+        <img src="images/06_settings_methods.jpg" width="1400" height="772" alt="監視手法の設定。PCA、GPR、OR 統合の手法の選択と、経時変化の監視の土台にする手法" loading="lazy">
+        <figcaption>図 7　監視手法・OR 統合・経時変化の監視</figcaption>
+      </figure>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>手法</th><th>見ているもの</th><th>検証で得意だった異常</th></tr></thead>
+          <tbody>
+            <tr><td>M1 M3S</td><td>X・Y それぞれの |平均| + 3σ</td><td>Radial など、正常のばらつきと同じ向きの大きな変化</td></tr>
+            <tr><td>M2 多項式係数の SPC</td><td>多項式の係数ごとの管理図</td><td>特定の係数の変化（どの成分かが分かりやすい）</td></tr>
+            <tr><td>M3 Mahalanobis 距離</td><td>係数の組み合わせ</td><td>係数の異常な組み合わせ、平均・σ が同じまま形が変わる異常</td></tr>
+            <tr><td>M4 PCA T²</td><td>主成分の中のずれ</td><td>全体の平均の検出率が高い</td></tr>
+            <tr><td>M5 PCA SPE</td><td>主成分で表せないずれ</td><td>局所的な変形、単一 Shot</td></tr>
+            <tr><td>M6 GPR</td><td>滑らかな個体差と計測誤差を分けたモデル</td><td>局所的な変形、単一 Shot、高次</td></tr>
+            <tr><td>OR 統合</td><td>選んだ手法のどれか 1 つでも警報（統合したあとの誤報率をそろえる）</td><td>全体で最も高い検出率（既定は M3S・Mahalanobis 4 次・PCA T²・SPE・GPR）</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub-heading">7-4. 経時変化の監視（EWMA・CUSUM）</h3>
+      <p>
+        少しずつ進む変化を見る手法です。管理限界は、正常なときに最初の誤報が出るまでの平均の枚数 <strong>ARL₀</strong>（既定 370 枚）にそろえます。
+        EWMA の λ と CUSUM の k は、既定では検証で選ばれた値を手法ごとに使います（「自分で選ぶ」で変えられます）。
+        校正期間の Wafer をブロック（既定 25 枚＝1 Lot）ずつつないだ長い正常系列で管理限界を決めます。
+      </p>
+
+      <h3 class="sub-heading">7-5. 異常の注入試験</h3>
+      <p>
+        <span class="ui">1 Wafer の注入試験</span>：校正期間の正常な Wafer に、異常の形（B1〜B10）を大きさ（σ_dir の倍数）ごとに足して、検出率を比べます。
+        σ_dir は「異常の形の向きでの、正常な Wafer のばらつき（標準偏差）」です。<br>
+        <span class="ui">経時変化の注入試験</span>：正常な系列の途中から、成分（低次・高次・Radial・局所など）が Step や Ramp の形で変わったときに、気づくまでの枚数を比べます。
+      </p>
+      <figure class="screen-figure">
+        <img src="images/07_settings_injection.jpg" width="1400" height="772" alt="異常の注入試験の設定。異常の形、大きさ、回数、経時変化の成分と変化の形" loading="lazy">
+        <figcaption>図 8　異常の注入試験</figcaption>
+      </figure>
+
+      <div class="callout tip">
+        <div class="callout-icon" aria-hidden="true">✓</div>
+        <div>
+          <h3>設定を保存しておく</h3>
+          <p>メニューの［ファイル］→［設定を保存…］で、列の対応づけを含む設定をファイル（JSON）に残せます。次回は［設定を読み込む…］で同じ設定に戻せます。［既定の値に戻す］で、いつでも既定に戻せます。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="run" class="content-section">
+      <div class="section-heading">
+        <span class="section-number">08</span>
+        <div>
+          <p class="section-kicker">Step 3 · Run</p>
+          <h2>検証を実行する</h2>
+        </div>
+      </div>
+      <ol class="numbered-steps">
+        <li><div><strong>［検証を実行］を押す</strong><p>窓の下に、今の処理と進み具合が出ます。設定に直すところがあれば、何をどう直すかが出ます。</p>
+          <figure class="screen-figure">
+            <img src="images/08_running.jpg" width="1400" height="772" alt="検証の実行中。窓の下に処理の内容、進み具合の棒、中止のボタン" loading="lazy">
+            <figcaption>図 9　実行中（窓の下に進み具合と［中止］）</figcaption>
+          </figure>
+        </div></li>
+        <li><div><strong>途中で止めるときは［中止］を押す</strong><p>キーボードの <kbd>Esc</kbd> でも止められます。区切りのよいところで止まります（途中までの計算は残りません）。</p></div></li>
+        <li><div><strong>終わると「3. 結果」に切り替わる</strong><p>窓の下に、かかった時間が出ます。</p></div></li>
+      </ol>
+      <p class="note">
+        かかる時間の例（Apple M1 の Mac、既定の設定）：練習用データ 600 枚で 10〜20 秒、3,000 枚で 30 秒〜1 分です。
+        計測点・枚数・注入試験の回数が多いほど長くなります。GPR は計測点が多いと時間がかかります。
+      </p>
+    </section>
+
+    <section id="results" class="content-section">
+      <div class="section-heading">
+        <span class="section-number">09</span>
+        <div>
+          <p class="section-kicker">Step 4 · Results</p>
+          <h2>結果を見る</h2>
+        </div>
+      </div>
+      <p>「3. 結果」の中のタブで、見るものを切り替えます。窓を大きく（最大化）すると、図が大きく見やすくなります。</p>
+
+      <h3 class="sub-heading">9-1. 概要</h3>
+      <p>
+        上の「要点」に、件数、手法ごとの警報の数、注入試験で最もよかった手法などが短い文で出ます。「注意」も必ず読んでください。
+        下の表は手法ごとの管理限界と警報の数です。「校正の警報率」は誤報率以下になります。「評価の警報で M3S は警報なし」は、M3S では見つからなかったものの数です。
+      </p>
+      <figure class="screen-figure">
+        <img src="images/09_result_summary.jpg" width="1400" height="772" alt="結果の概要。要点の文と、手法ごとの管理限界と警報の数の表" loading="lazy">
+        <figcaption>図 10　概要</figcaption>
+      </figure>
+
+      <h3 class="sub-heading">9-2. 管理図</h3>
+      <p>
+        「手法」で選んだ手法のスコアを時間の順に並べた図です。灰色＝学習、水色＝校正、白＝評価の期間です。
+        赤い × が警報、▼ がラベルで異常の計測、破線が管理限界です。学習の期間は学習に使った Wafer なので、値が小さめに出ます。
+        「縦軸」で対数にもできます。図の上のボタンで拡大・移動・画像の保存ができます。
+      </p>
+      <figure class="screen-figure">
+        <img src="images/10_result_chart.jpg" width="1400" height="772" alt="管理図。学習・校正・評価の期間の色分け、スコアの折れ線、管理限界の破線、警報の赤い印" loading="lazy">
+        <figcaption>図 11　管理図</figcaption>
+      </figure>
+
+      <h3 class="sub-heading">9-3. 警報の一覧</h3>
+      <p>手法 × 計測で、警報が出たところに黒い印が付きます。赤い線から右が評価期間です。どの手法が同じ計測で警報を出しているかが一目で分かります。</p>
+      <figure class="screen-figure">
+        <img src="images/11_result_overview.jpg" width="1400" height="772" alt="警報の一覧。縦に手法、横に計測の順番が並び、警報の出たところに黒い印" loading="lazy">
+        <figcaption>図 12　警報の一覧</figcaption>
+      </figure>
+
+      <h3 class="sub-heading">9-4. 判定一覧</h3>
+      <p>
+        計測ごとの判定の表です。「警報が1つ以上ある計測だけ」「M3S は警報なし・ほかで警報あり の計測だけ」「評価期間だけ」で絞り込めます。
+        見出しを押すと並べ替えます。行をダブルクリック（または <kbd>Enter</kbd>）すると、その計測のマップを表示します。
+      </p>
+      <figure class="screen-figure">
+        <img src="images/12_result_table.jpg" width="1400" height="772" alt="判定一覧。順番、Wafer、日時、区分、警報の数、ラベル、補った値の数、M3S の値などの表" loading="lazy">
+        <figcaption>図 13　判定一覧</figcaption>
+      </figure>
+
+      <h3 class="sub-heading">9-5. マップ</h3>
+      <p>
+        選んだ計測の Wafer 面内の矢印の図と、その計測の全手法の判定です。「表示」で、計測値・正常時の平均との差・PCA で表せない成分（SPE の中身）・GPR の残差を切り替えます。
+        左上の矢印が長さの目安（nm）、赤い白抜きの丸が補った点です。［前へ］［次へ］で前後の計測に移ります。
+      </p>
+      <figure class="screen-figure">
+        <img src="images/13_result_map.jpg" width="1400" height="772" alt="マップ。Wafer 面内の矢印の図と、この計測の手法ごとの判定・スコア・管理限界の表" loading="lazy">
+        <figcaption>図 14　マップ</figcaption>
+      </figure>
+
+      <h3 class="sub-heading">9-6. 経時の限界</h3>
+      <p>
+        経時変化の検出器ごとの管理限界、再標本化で推定した ARL₀、校正期間と評価期間の警報の数、評価期間で最初の警報です。
+        校正の警報数は「件数 ÷ ARL₀」がおよその目安です。「管理限界の注意」に字があるものは、目標の ARL₀ にそろえられなかった検出器です（<a href="#reading">11</a>）。
+      </p>
+      <figure class="screen-figure">
+        <img src="images/14_result_temporal.jpg" width="1400" height="772" alt="経時の限界の表。検出器、管理限界、ARL₀ の推定、管理限界の注意" loading="lazy">
+        <figcaption>図 15　経時変化の管理限界</figcaption>
+      </figure>
+
+      <h3 class="sub-heading">9-7. ラベル照合（ラベルを選んだときだけ）</h3>
+      <p>
+        ラベルで異常の計測を何件見つけたか（検出率）、ラベルのない評価期間の計測で警報が出た割合、ROC-AUC（1 に近いほどよく見分けている）です。
+        ラベルのない計測には、まだ気づいていない異常が混じることがあります。
+      </p>
+      <figure class="screen-figure">
+        <img src="images/15_result_label.jpg" width="1400" height="772" alt="ラベル照合の表。手法ごとのラベルで異常の件数、検出数、検出率と信頼区間" loading="lazy">
+        <figcaption>図 16　ラベル照合</figcaption>
+      </figure>
+
+      <h3 class="sub-heading">9-8. 注入 1 Wafer・注入 経時変化</h3>
+      <p>
+        <span class="ui">注入 1 Wafer</span>：「図にするパターン」で異常の形を選ぶと、大きさごとの検出率を手法ごとに描きます（すべてのパターンを並べることもできます）。
+        「表（手法ごとのまとめ）」には、手法ごとの平均の検出率と、M3S の検出率が 10% 未満の条件での平均の検出率が出ます。<br>
+        <span class="ui">注入 経時変化</span>：気づくまでの平均の枚数（RMST。短いほど早い）を、速い順に 10 個描きます。すべての検出器は「表」にあります。
+      </p>
+      <figure class="screen-figure">
+        <img src="images/16_result_single.jpg" width="1400" height="772" alt="注入 1 Wafer の図。横軸が異常の大きさ、縦軸が検出率で、手法ごとの折れ線" loading="lazy">
+        <figcaption>図 17　注入試験（1 Wafer）</figcaption>
+      </figure>
+      <figure class="screen-figure">
+        <img src="images/17_result_drift.jpg" width="1400" height="772" alt="注入 経時変化の図。検出器ごとの気づくまでの平均の枚数の横棒" loading="lazy">
+        <figcaption>図 18　注入試験（経時変化）</figcaption>
+      </figure>
+    </section>
+
+    <section id="save" class="content-section">
+      <div class="section-heading">
+        <span class="section-number">10</span>
+        <div>
+          <p class="section-kicker">Step 5 · Save</p>
+          <h2>結果を保存する</h2>
+        </div>
+      </div>
+      <ol class="numbered-steps">
+        <li><div><strong>［結果を保存…］を押して、保存先のフォルダを選ぶ</strong><p>選んだフォルダの中に <code>検証結果_年月日-時分秒</code> のフォルダを新しく作ります。すでにあるファイルは上書きしません。</p></div></li>
+        <li><div><strong>「フォルダを開きますか？」で［はい］を押す</strong><p>保存したフォルダが開きます。</p></div></li>
+      </ol>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ファイル</th><th>中身</th></tr></thead>
+          <tbody>
+            <tr><td><code>検証結果.xlsx</code></td><td>すべての表（概要、データ確認、手法と管理限界、判定、経時変化、ラベル照合、注入試験、除外した計測、共通の計測点）。値はアプリで計算した結果で、数式ではありません</td></tr>
+            <tr><td><code>CSV/</code></td><td>同じ表の CSV（UTF-8・BOM 付き。Excel でそのまま開けます）</td></tr>
+            <tr><td><code>図/</code></td><td>手法ごとの管理図、警報の一覧、注入試験の図（PNG）</td></tr>
+            <tr><td><code>設定.json</code></td><td>このときの設定。［ファイル］→［設定を読み込む…］で同じ設定に戻せます</td></tr>
+            <tr><td><code>このフォルダについて.txt</code></td><td>ファイルの説明</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout warning">
+        <div class="callout-icon" aria-hidden="true">!</div>
+        <div>
+          <h3>保存先に気をつける</h3>
+          <p>保存した結果には実データの値が含まれます。社内のデータを置いてよい場所に保存し、社外のサービスや公開の場所（このアプリのリポジトリを含む）には置かないでください。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="reading" class="content-section">
+      <div class="section-heading">
+        <span class="section-number">11</span>
+        <div>
+          <p class="section-kicker">Reading the results</p>
+          <h2>結果を読むときの注意</h2>
+        </div>
+      </div>
+      <ul>
+        <li><strong>同じ誤報率で比べています。</strong>検出率や警報の数を比べるときは、どの手法も正常な Wafer で警報が出る割合が同じ、という前提です。</li>
+        <li><strong>校正の件数が少ないと、管理限界がぶれます。</strong>「校正期間の計測が … 件で、誤報率 1% に当たる件数が … 件しかありません」と出たら、誤報率を 5% にするか、正常期間を長くしてください。</li>
+        <li><strong>経時変化では、校正の件数が ARL₀ より少ないと、Shewhart の管理限界が校正期間の最大値になります。</strong>ほかの検出器より警報が出にくい側に偏るので、そのまま比べられません（結果の「注意」と「管理限界の注意」に出ます）。目安は、校正の件数が ARL₀ の 2 倍以上です。</li>
+        <li><strong>ブロックより長い周期のゆっくりした変動は、管理限界の計算に入りません。</strong>実際の誤報はそれより多くなることがあります。「経時の限界」で、校正期間の実際の警報数が目安（件数 ÷ ARL₀）と大きく違わないかを確かめてください。</li>
+        <li><strong>実データの系列では、警報が出たらその検出器を最初からやり直します。</strong>CUSUM などは、やり直さないと一度超えたあと警報が続いて見えるためです。</li>
+        <li><strong>正常期間に異常が混じると、その異常を「正常」として学習します。</strong>正常期間は、工程に問題がなかったと分かっている期間にしてください。分かっている異常はラベルで除けます。</li>
+        <li><strong>欠けた点は正常のモデルで補うので、欠けた点にある異常は見えません。</strong>補った値の数は判定一覧とマップに出ます。</li>
+        <li><strong>注入試験は「検証と同じ形の異常」での比較です。</strong>実際に起きる異常の形が違えば、手法の順位も変わることがあります。</li>
+        <li><strong>練習用データの結果は模擬データの結果です。</strong>実データの結果としては使わないでください。</li>
+      </ul>
+    </section>
+
+    <section id="verification" class="content-section">
+      <div class="section-heading">
+        <span class="section-number">12</span>
+        <div>
+          <p class="section-kicker">Verification</p>
+          <h2>完了確認</h2>
+        </div>
+      </div>
+      <div class="checklist-grid">
+        <article>
+          <h3>結果の確認</h3>
+          <label><input type="checkbox"> データ確認の件数（計測の件数・計測点の数・未測定の数）が思ったとおりだった</label>
+          <label><input type="checkbox"> 概要の「注意」を読み、件数が足りないなどの注意に対応した</label>
+          <label><input type="checkbox"> 警報の出た計測を、マップで確かめた</label>
+          <label><input type="checkbox"> 保存したフォルダに Excel・CSV・図・設定がある</label>
+        </article>
+        <article>
+          <h3>終了時の確認</h3>
+          <label><input type="checkbox"> 結果を社内のデータを置いてよい場所に保存した</label>
+          <label><input type="checkbox"> データや結果を社外のサービスに送っていない</label>
+          <label><input type="checkbox"> 次回のために設定を保存した（任意）</label>
+          <label><input type="checkbox"> 計算が終わってからアプリを閉じた</label>
+        </article>
+      </div>
+    </section>
+
+    <section id="troubleshooting" class="content-section">
+      <div class="section-heading">
+        <span class="section-number">13</span>
+        <div>
+          <p class="section-kicker">Troubleshooting</p>
+          <h2>困ったとき</h2>
+        </div>
+      </div>
+      <div class="faq-list">
+        <details>
+          <summary>Windows で「Windows によって PC が保護されました」と出る</summary>
+          <div><p>署名のないアプリなので出ます。［詳細情報］→［実行］で起動できます。会社の PC で［実行］が出ないときは、社内の規則で止められています。情報システムの担当に相談するか、Python 版（<a href="#start">4-3</a>）を使ってください。</p></div>
+        </details>
+        <details>
+          <summary>Mac で「開発元を検証できないため開けません」と出る</summary>
+          <div><p>アプリを右クリック（control＋クリック）→［開く］→［開く］を押します。それでも開けないときは、［システム設定］→［プライバシーとセキュリティ］の［このまま開く］を押します。</p></div>
+        </details>
+        <details>
+          <summary>start_windows.bat で「Python 3.14 が見つかりません。」と出る</summary>
+          <div><p>python.org から Python 3.14 を入れてから、もう一度ダブルクリックします。インストールの最初の画面で「Add python.exe to PATH」にチェックを入れてください。</p></div>
+        </details>
+        <details>
+          <summary>「準備に失敗しました。」と出る（初回のライブラリのインストール）</summary>
+          <div><p>インターネットにつながっているか確かめ、<code>realdata_validator</code> フォルダの <code>.venv</code> フォルダを消してから、もう一度ダブルクリックします。会社のネットワークでライブラリを入れられないときは、実行ファイル版を使ってください。</p></div>
+        </details>
+        <details>
+          <summary>「起動できません」と出て、アプリが開かない</summary>
+          <div><p>メッセージの「対処」に従ってください（Python の版が古い、ライブラリが欠けている、など）。くわしい内容はログ（ホームフォルダの <code>.wafer_monitor_validator/log.txt</code>）にあります。</p></div>
+        </details>
+        <details>
+          <summary>「古い形式の Excel ファイル（.xls）は読み込めません。」と出る</summary>
+          <div><p>Excel でファイルを開き、［名前を付けて保存］で .xlsx か CSV（UTF-8）にしてから読み込みます。</p></div>
+        </details>
+        <details>
+          <summary>CSV の文字が化ける、列が 1 つにまとまってしまう</summary>
+          <div><p>Excel でファイルを開き、「CSV UTF-8（コンマ区切り）」で保存し直してから読み込みます。区切りがセミコロンなどの特殊な形のときも、この方法で直ります。</p></div>
+        </details>
+        <details>
+          <summary>「必須の列が対応づけられていません」と出る</summary>
+          <div><p>「列の対応づけ」で、（必須）の項目（Wafer・Xmm・Ymm・markXmm・markYmm・measX・measY）にファイルの列を選びます。同じ列を 2 つの項目に選ぶことはできません。</p></div>
+        </details>
+        <details>
+          <summary>「共通の計測点が … 点しかありません。」と出る</summary>
+          <div><p>Wafer ごとに計測点の配置が違う（計測レシピが混ざっている）可能性があります。絞り込みで同じレシピのデータだけにするか、「共通の計測点にする条件」の割合を下げます。座標が少しずつ揺れて記録されているときは、「座標の丸め幅」を 0.01 mm などに広げます。</p></div>
+        </details>
+        <details>
+          <summary>「正常期間の計測が … 件しかありません。」と出る</summary>
+          <div><p>学習と校正に 20 件ずつ以上（合計 40 件以上）必要です。正常期間の割合・件数を増やすか、「計測を除く欠けの割合」をゆるめます。</p></div>
+        </details>
+        <details>
+          <summary>赤い字で「管理限界は不安定です」と出る</summary>
+          <div><p>校正の件数に対して誤報率が小さすぎます。誤報率を 5% にするか、正常期間を長くします。そのまま実行もできますが、結果の数値がぶれやすくなります（<a href="#reading">11</a>）。</p></div>
+        </details>
+        <details>
+          <summary>GPR や多項式の次数が「使いません」と出る</summary>
+          <div><p>GPR は計測点が 1500 点を超えると計算が重すぎるので使いません。多項式は、計測点の数に対して次数が高すぎると係数を決められないので使いません。ほかの手法で比べてください。</p></div>
+        </details>
+        <details>
+          <summary>Excel の読み込みに時間がかかる</summary>
+          <div><p>数十万行を超える Excel は時間がかかります（進み具合は窓の下に出ます）。Excel で CSV に保存し直すと、ずっと早く読み込めます。</p></div>
+        </details>
+        <details>
+          <summary>文字が小さい（大きい）、窓が画面に収まらない</summary>
+          <div><p>メニューの［表示］→［文字の大きさ］で「小さめ・標準・大きめ」を選べます。窓は画面の大きさに合わせて開きます。図を大きく見たいときは窓を最大化してください。</p></div>
+        </details>
+        <details>
+          <summary>「予期しないエラー」と出る</summary>
+          <div><p>設定を見直してもう一度試します。続くときは、メニューの［ヘルプ］→［ログのフォルダを開く］で開く <code>log.txt</code> を開発者に渡してください。ログには計測値は含まれません。</p></div>
+        </details>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon" aria-hidden="true">i</div>
+        <div>
+          <h3>解決しない場合</h3>
+          <p>このアプリの管理者へ、起きた日時・操作した画面・表示されたメッセージ・ログ（<code>log.txt</code>）を伝えてください。計測データそのものは送らないでください。</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="page-footer">
+      <p>Wafer 面内傾向の異常検知 実データ検証アプリ 利用手順書 · wafer_anomaly_monitoring</p>
+      <p>更新日: 2026/10/18 · 版: 1.0（アプリ 1.0.0）</p>
+    </footer>
+  </main>
+
+  <button id="back-to-top" class="back-to-top" type="button" aria-label="ページ上部へ戻る">
+    <span aria-hidden="true">↑</span>
+    トップへ戻る
+  </button>
+</body>
+</html>

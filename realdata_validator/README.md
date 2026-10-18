@@ -9,6 +9,8 @@ M3S・多項式係数 SPC・Mahalanobis 距離・PCA T²／SPE・GPR 残差・EW
 - データはこのパソコンの中だけで処理し、インターネットには送りません。
 - 画面・メッセージ・保存するファイルはすべて日本語です。
 
+**画面の画像つきの利用手順書（HTML）**：[docs/user_guide/user_guide.html](docs/user_guide/user_guide.html)（ブラウザで開く。入手と起動・データの読み込み・設定・結果の見方・困ったとき）
+
 ## できること
 
 | 手順 | 画面 | 内容 |
@@ -155,7 +157,8 @@ realdata_validator/          ← 起動・実行ファイル化・説明（こ�
 ├── build_mac.command / build_windows.bat   ← 実行ファイル版を作る（テスト → PyInstaller → 自己診断）
 ├── WaferMonitorValidator.spec ← PyInstaller の設定
 ├── requirements.txt / requirements-build.txt
-└── tools/capture_screens.py  ← 各画面の画像を撮る（開発用、Mac。練習用の模擬データで動かす）
+├── docs/user_guide/          ← 利用手順書（HTML、画面の画像つき）
+└── tools/capture_screens.py  ← 各画面の画像を撮る（開発用、Mac。練習用の模擬データで動かす。手順書の画像もこれで作る）
 src/realdata/                ← 計算（画面の部品を読み込まない。テストできる）
 ├── columns.py・loader.py・preprocess.py   ← 標準の列、CSV・Excel の読み込み、前処理
 ├── dataset.py               ← 共通の計測点、欠けの補完（PPCA）、学習・校正・評価への分割

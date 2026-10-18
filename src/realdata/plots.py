@@ -233,13 +233,19 @@ def wafer_map(figure: Figure, result, row: int, view: str = "deviation", arrow_s
     return arrow_scale
 
 
-def injection_single_chart(figure: Figure, table, methods: list[str] | None = None) -> None:
-    """パターンごとの「大きさ → 検出率」（同じ誤報率）。B10 は1水準なので最後の枠に横棒で出す。"""
+def injection_single_chart(figure: Figure, table, methods: list[str] | None = None, pattern: str | None = None) -> None:
+    """パターンごとの「大きさ → 検出率」（同じ誤報率）。B10 は1水準なので最後の枠に横棒で出す。
+
+    pattern を指定すると、そのパターンだけを大きく描く（画面で見やすくするため）。
+    """
     figure.clear()
     figure.set_layout_engine("constrained")
     if table is None or table.empty:
         return
     methods = methods or list(dict.fromkeys(table["method"]))
+    if pattern is not None:
+        _injection_single_panel(figure, table[table["pattern"] == pattern], methods, pattern)
+        return
     patterns = [p for p in dict.fromkeys(table["pattern"]) if p not in (NO_ANOMALY, "B10")]
     has_b10 = "B10" in set(table["pattern"])
     panels = len(patterns) + (1 if has_b10 else 0)
@@ -279,14 +285,45 @@ def injection_single_chart(figure: Figure, table, methods: list[str] | None = No
     figure.legend(handles, labels, loc="outside lower center", ncol=min(4, len(labels)), fontsize=7, frameon=False)
 
 
-def injection_temporal_chart(figure: Figure, summary) -> None:
-    """検出器ごとの平均の制限付き平均遅延（RMST。小さいほど早く気づく）。"""
+def _injection_single_panel(figure: Figure, subset, methods: list[str], pattern: str) -> None:
+    axes = figure.add_subplot(111)
+    title = f"{pattern} {PATTERN_LABELS.get(pattern, '')}（同じ誤報率での検出率）"
+    if pattern == "B10":
+        ordered = subset.set_index("method").reindex(methods)
+        axes.barh(range(len(methods)), ordered["detection_rate"].to_numpy(), color="#90A4AE")
+        axes.set_yticks(range(len(methods)))
+        axes.set_yticklabels([method_label(m) for m in methods], fontsize=9)
+        axes.invert_yaxis()
+        axes.set_xlim(0, 1)
+        axes.set_xlabel("検出率")
+    else:
+        for index, method in enumerate(methods):
+            line = subset[subset["method"] == method].sort_values("amplitude_sigma")
+            if not line.empty:
+                axes.plot(line["amplitude_sigma"], line["detection_rate"], ms=6, lw=1.6, label=method_label(method), **method_style(index, method))
+        amplitudes = sorted(subset["amplitude_sigma"].dropna().unique())
+        axes.set_xscale("log", base=2)
+        axes.set_xticks(amplitudes)
+        axes.set_xticklabels([f"{value:g}" for value in amplitudes])
+        axes.xaxis.set_minor_locator(NullLocator())
+        axes.set_ylim(-0.03, 1.03)
+        axes.set_xlabel("異常の大きさ（σ_dir の倍数）")
+        axes.set_ylabel("検出率")
+        axes.legend(loc="center left", bbox_to_anchor=(1.01, 0.5), fontsize=9, frameon=False)
+        axes.grid(True, color="#E0E0E0", lw=0.6)
+    axes.set_title(title, loc="left", fontsize=11)
+
+
+def injection_temporal_chart(figure: Figure, summary, limit: int | None = None) -> None:
+    """検出器ごとの平均の制限付き平均遅延（RMST。小さいほど早く気づく）。limit を指定すると速い順にその数だけ描く。"""
     figure.clear()
     figure.set_layout_engine("constrained")
     if summary is None or summary.empty:
         return
     axes = figure.add_subplot(111)
     ordered = summary.sort_values("mean_rmst_delay")
+    shown_all = limit is None or len(ordered) <= limit
+    ordered = ordered if shown_all else ordered.head(limit)
     y = np.arange(len(ordered))
     axes.barh(y, ordered["mean_rmst_delay"], color="#5C8DB8")
     for position, (rmst, rate, pre) in enumerate(zip(ordered["mean_rmst_delay"], ordered["mean_detection_rate"], ordered["pre_change_false_alarm_rate"])):
@@ -295,5 +332,8 @@ def injection_temporal_chart(figure: Figure, summary) -> None:
     axes.set_yticklabels([_short_label(label, 40) for label in ordered["detector_label"]], fontsize=8)
     axes.invert_yaxis()
     axes.set_xlabel("平均の検出遅延 RMST（枚。未検出は観測した枚数として数える）")
-    axes.set_title("経時変化の注入試験：気づくまでの枚数（短いほど早い）", loc="left", fontsize=11)
+    title = "経時変化の注入試験：気づくまでの枚数（短いほど早い）"
+    if not shown_all:
+        title += f"　速い順に {limit} 個（すべては表で）"
+    axes.set_title(title, loc="left", fontsize=11)
     axes.set_xlim(0, float(ordered["mean_rmst_delay"].max()) * 1.6)

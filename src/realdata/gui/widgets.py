@@ -4,6 +4,7 @@ from __future__ import annotations
 import sys
 import tkinter as tk
 import traceback
+import warnings
 from pathlib import Path
 from tkinter import font as tkfont
 from tkinter import messagebox, ttk
@@ -14,6 +15,9 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolb
 from matplotlib.figure import Figure
 
 from ..errors import UserFacingError
+
+# まだ表示していないタブの図は大きさが 0 なので、図の余白の自動調整が「できない」と警告する（表示すれば直る）
+warnings.filterwarnings("ignore", message="constrained_layout not applied", category=UserWarning)
 
 IS_MAC = sys.platform == "darwin"
 FONT_SIZES = {"小さめ": (14, 11), "標準": (16, 12), "大きめ": (18, 14)}  # （Mac, Windows）の pt。Windows の 12 pt ＝ 16 px
@@ -37,6 +41,7 @@ def use_light_appearance(window: tk.Misc) -> None:
     if not IS_MAC:
         return
     try:
+        window.update_idletasks()  # 窓ができる前に指定すると、Tk が「見た目を読めない」と警告するため
         window.tk.call("::tk::unsupported::MacWindowStyle", "appearance", window._w, "aqua")
     except tk.TclError:
         pass
@@ -241,7 +246,12 @@ class DataFrameTable(ttk.Frame):
         self.tree.delete(*self.tree.get_children())
         frame = pd.DataFrame() if frame is None else frame
         self.frame = frame.reset_index(drop=True)
-        columns = [str(column) for column in frame.columns]
+        columns = []
+        for column in frame.columns:  # Treeview の列名は重ならないようにする（同じ名前だと見出しが消える）
+            name, number = str(column), 2
+            while name in columns:
+                name, number = f"{column}（{number}）", number + 1
+            columns.append(name)
         self.tree["columns"] = columns
         measure = tkfont.nametofont("TkDefaultFont").measure
         shown = self.frame.head(TABLE_MAX_ROWS)
