@@ -20,3 +20,9 @@ logs/
 
 # 参考文献の本文（著作物なので Git に入れない。references.json に入手先を記録）
 references/sources/
+
+# 実データ検証アプリ：専用の Python 環境と、実行ファイル化の途中・成果物（作り直せる。大きいので Git に入れない）
+realdata_validator/.venv/
+realdata_validator/.venv-build/
+realdata_validator/build/
+realdata_validator/dist/

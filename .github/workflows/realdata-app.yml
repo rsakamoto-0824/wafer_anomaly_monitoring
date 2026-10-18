@@ -1,0 +1,88 @@
+# 実データ検証アプリを Windows と Mac で確かめ、実行ファイルを作る。
+# - テスト（読み込み・前処理・検証・保存と、画面を通した一連の操作）
+# - PyInstaller で実行ファイルを作り、できた実行ファイルで自己診断（画面なし・画面あり）
+# - 実行ファイルは Actions の Artifacts から 14 日間ダウンロードできる（データは含まない。練習用データは自己診断のときに作る）
+name: 実データ検証アプリ（Windows・Mac）
+
+on:
+  pull_request:
+    paths:
+      - "src/**"
+      - "realdata_validator/**"
+      - "tests/test_17_realdata_input.py"
+      - "tests/test_18_realdata_analysis.py"
+      - "tests/test_19_realdata_gui.py"
+      - "configs/default.yaml"
+      - ".github/workflows/realdata-app.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+
+      - name: ライブラリを入れる
+        run: python -m pip install -r realdata_validator/requirements-build.txt
+
+      - name: テスト（画面を通した一連の操作を含む）
+        run: python -m pytest -q tests/test_17_realdata_input.py tests/test_18_realdata_analysis.py tests/test_19_realdata_gui.py
+
+      - name: 実行ファイルを作る
+        working-directory: realdata_validator
+        run: python -m PyInstaller --noconfirm --clean WaferMonitorValidator.spec
+
+      - name: 実行ファイルの自己診断（Windows）
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $exe = "realdata_validator/dist/WaferMonitorValidator/WaferMonitorValidator.exe"
+          foreach ($mode in @("--self-test", "--gui-smoke-test")) {
+            $out = Join-Path $env:RUNNER_TEMP ($mode.TrimStart("-"))
+            $process = Start-Process -FilePath $exe -ArgumentList $mode, $out -Wait -PassThru
+            Get-ChildItem $out -Filter "*_result.txt" | Get-Content
+            if ($process.ExitCode -ne 0) { throw "$mode に失敗（終了コード $($process.ExitCode)）" }
+          }
+
+      - name: 実行ファイルの自己診断（Mac）
+        if: runner.os == 'macOS'
+        run: |
+          app="realdata_validator/dist/WaferMonitorValidator.app/Contents/MacOS/WaferMonitorValidator"
+          for mode in --self-test --gui-smoke-test; do
+            out="$RUNNER_TEMP/${mode#--}"
+            "$app" "$mode" "$out"
+            cat "$out"/*_result.txt
+          done
+
+      - name: Windows 用の実行ファイルをまとめる
+        if: runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: WaferMonitorValidator-Windows
+          path: realdata_validator/dist/WaferMonitorValidator/
+          retention-days: 14
+
+      - name: Mac 用の実行ファイルをまとめる
+        if: runner.os == 'macOS'
+        run: ditto -c -k --keepParent realdata_validator/dist/WaferMonitorValidator.app "$RUNNER_TEMP/WaferMonitorValidator-Mac.zip"
+
+      - name: Mac 用の実行ファイルを保存する
+        if: runner.os == 'macOS'
+        uses: actions/upload-artifact@v4
+        with:
+          name: WaferMonitorValidator-Mac
+          path: ${{ runner.temp }}/WaferMonitorValidator-Mac.zip
+          retention-days: 14

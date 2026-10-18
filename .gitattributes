@@ -1,0 +1,3 @@
+# Windows の起動用ファイルは改行を CRLF のまま、Mac の起動用ファイルは LF のままにする
+*.bat text eol=crlf
+*.command text eol=lf

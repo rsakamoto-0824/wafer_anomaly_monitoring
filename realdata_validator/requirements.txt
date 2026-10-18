@@ -1,0 +1,9 @@
+# 実データ検証アプリの実行に必要なライブラリ（Python 3.14.6 で動作確認。Python 3.14.5 以上を想定）
+# 版は検証（../requirements.txt）と同じにそろえる
+numpy==2.5.4
+scipy==1.18.1
+pandas==3.0.6
+scikit-learn==1.9.1
+matplotlib==3.11.2
+PyYAML==6.0.3        # 練習用データの工程モデル（configs/default.yaml）の読み込み
+openpyxl==3.1.5      # Excel（.xlsx）の読み込みと結果の保存

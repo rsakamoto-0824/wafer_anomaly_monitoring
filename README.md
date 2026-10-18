@@ -10,6 +10,9 @@
 
 数値はすべて乱数で作った模擬データによります。実データ・社内データは使っていません。
 
+**実データで同じ比較をするアプリ**（Mac・Windows）：Excel・CSV の計測テーブルを読み込み、画面で設定を選ぶと、
+同じ誤報率にそろえた判定・異常の注入試験・経時変化の監視の結果を表示・保存します。使い方は [realdata_validator/README.md](realdata_validator/README.md)。
+
 ## 結果の要点（誤報率をそろえた比較。数値の出典は `results/metrics/report_values.csv`）
 
 | 問い | 答え（本報告の模擬データでの結果） |
@@ -40,7 +43,7 @@
 ## 必要な環境
 
 - Python 3.14.5 以上（動作確認は Python 3.14.6、macOS・Apple M1・メモリ 8 GB）
-- ライブラリ（版は [requirements.txt](requirements.txt) で固定）：NumPy、SciPy、pandas、scikit-learn、Matplotlib、seaborn、PyYAML、pytest、pyarrow（Parquet の書き出し）、joblib（並列処理）
+- ライブラリ（版は [requirements.txt](requirements.txt) で固定）：NumPy、SciPy、pandas、scikit-learn、Matplotlib、seaborn、PyYAML、pytest、pyarrow（Parquet の書き出し）、joblib（並列処理）、openpyxl（実データ検証アプリの Excel）
 - 環境変数・認証情報・外部 API は使いません。
 
 ## 環境構築
@@ -55,7 +58,7 @@ python3.14 -m venv .venv
 
 ## 実行方法
 
-ユニットテスト（品質保証の15項目を59件のテストで確認、約10秒）：
+ユニットテスト（品質保証の15項目を59件、実データ検証アプリを23件のテストで確認、約30秒。アプリのテストでは画面が一瞬開きます）：
 
 ```bash
 .venv/bin/python -m pytest
@@ -119,8 +122,10 @@ wafer_anomaly_monitoring/
 │   ├── evaluation.py       # 検出率・AUC・検出遅延と信頼区間
 │   ├── experiments/        # phase1・phase2・phase3・apc の実行
 │   ├── visualization.py    # 図
-│   └── reporting.py        # レポートへの数値・表の埋め込み
-├── tests/                  # 品質保証の15項目
+│   ├── reporting.py        # レポートへの数値・表の埋め込み
+│   └── realdata/           # 実データ検証アプリの計算（読み込み・前処理・判定・注入試験・保存）と画面（gui/）
+├── realdata_validator/     # 実データ検証アプリの起動・実行ファイル化・使い方（README）
+├── tests/                  # 品質保証の15項目と、実データ検証アプリ（test_17〜19）
 ├── results/                # metrics・figures・samples（cache は Git に入れない）
 └── reports/                # 技術レポート
 ```
